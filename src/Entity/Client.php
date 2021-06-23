@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,16 @@ class Client
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Carpark::class, mappedBy="client")
+     */
+    private $carparks;
+
+    public function __construct()
+    {
+        $this->carparks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +166,36 @@ class Client
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Carpark[]
+     */
+    public function getCarparks(): Collection
+    {
+        return $this->carparks;
+    }
+
+    public function addCarpark(Carpark $carpark): self
+    {
+        if (!$this->carparks->contains($carpark)) {
+            $this->carparks[] = $carpark;
+            $carpark->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarpark(Carpark $carpark): self
+    {
+        if ($this->carparks->removeElement($carpark)) {
+            // set the owning side to null (unless already changed)
+            if ($carpark->getClient() === $this) {
+                $carpark->setClient(null);
+            }
+        }
 
         return $this;
     }

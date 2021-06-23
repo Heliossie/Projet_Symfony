@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParkingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,28 @@ class Parking
      * @ORM\Column(type="integer", nullable=true)
      */
     private $nb_places;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Carpark::class, mappedBy="parking")
+     */
+    private $carparks;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Pricelist::class, inversedBy="parkings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pricelist;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Operator::class, inversedBy="parkings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $operator;
+
+    public function __construct()
+    {
+        $this->carparks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +161,60 @@ class Parking
     public function setNbPlaces(?int $nb_places): self
     {
         $this->nb_places = $nb_places;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Carpark[]
+     */
+    public function getCarparks(): Collection
+    {
+        return $this->carparks;
+    }
+
+    public function addCarpark(Carpark $carpark): self
+    {
+        if (!$this->carparks->contains($carpark)) {
+            $this->carparks[] = $carpark;
+            $carpark->setParking($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarpark(Carpark $carpark): self
+    {
+        if ($this->carparks->removeElement($carpark)) {
+            // set the owning side to null (unless already changed)
+            if ($carpark->getParking() === $this) {
+                $carpark->setParking(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPricelist(): ?Pricelist
+    {
+        return $this->pricelist;
+    }
+
+    public function setPricelist(?Pricelist $pricelist): self
+    {
+        $this->pricelist = $pricelist;
+
+        return $this;
+    }
+
+    public function getOperator(): ?Operator
+    {
+        return $this->operator;
+    }
+
+    public function setOperator(?Operator $operator): self
+    {
+        $this->operator = $operator;
 
         return $this;
     }

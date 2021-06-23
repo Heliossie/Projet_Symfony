@@ -32,6 +32,24 @@ class Carpark
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Parking::class, inversedBy="carparks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $parking;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="carparks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Invoice::class, inversedBy="carparks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $invoice;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +87,42 @@ class Carpark
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getParking(): ?Parking
+    {
+        return $this->parking;
+    }
+
+    public function setParking(?Parking $parking): self
+    {
+        $this->parking = $parking;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getInvoice(): ?Invoice
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(?Invoice $invoice): self
+    {
+        $this->invoice = $invoice;
 
         return $this;
     }
