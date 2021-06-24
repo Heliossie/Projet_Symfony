@@ -29,11 +29,12 @@ class ClientController extends AbstractController
     {
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
+            'user' => $user,
             'carparks' => $carparkRepository->findBy(['client' => $user->getId()]),
+
         ]);
     }
-
-
+    
     /**
      * @Route("/user/{id}/carpark", name="carpark")
      */
