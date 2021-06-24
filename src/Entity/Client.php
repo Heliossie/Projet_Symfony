@@ -64,6 +64,11 @@ class Client
      */
     private $carparks;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Admin::class, mappedBy="client", cascade={"persist", "remove"})
+     */
+    private $admin;
+
     public function __construct()
     {
         $this->carparks = new ArrayCollection();
@@ -196,6 +201,28 @@ class Client
                 $carpark->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdmin(): ?Admin
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(?Admin $admin): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($admin === null && $this->admin !== null) {
+            $this->admin->setClient(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($admin !== null && $admin->getClient() !== $this) {
+            $admin->setClient($this);
+        }
+
+        $this->admin = $admin;
 
         return $this;
     }
