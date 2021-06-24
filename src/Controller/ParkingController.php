@@ -14,7 +14,7 @@ class ParkingController extends AbstractController
     public function index(): Response
     {
         return $this->render('parking/index.html.twig', [
-            'controller_name' => 'ParkingController',
+            'controller_name' => 'ParkingController - index',
         ]);
     }
 }
