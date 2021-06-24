@@ -23,16 +23,25 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}/invoices", name="invoice")
+     * @Route("/user/{id}/invoice", name="invoice")
      */
-    public function invoice(Client $user, CarparkRepository $carparkRepository
-    ): Response
+    public function invoice(Client $user, CarparkRepository $carparkRepository): Response
     {
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
-            'user' => $user,
             'carparks' => $carparkRepository->findBy(['client' => $user->getId()]),
+        ]);
+    }
 
+
+    /**
+     * @Route("/user/{id}/carpark", name="carpark")
+     */
+    public function carpark(Client $user, CarparkRepository $carparkRepository): Response
+    {
+        return $this->render('parking/carpark.html.twig', [
+            'controller_name' => 'ParkingController - carpark',
+            'carparks' => $carparkRepository->findBy(['client' => $user->getId()]),
         ]);
     }
 }
