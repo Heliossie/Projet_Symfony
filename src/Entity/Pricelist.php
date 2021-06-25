@@ -30,13 +30,13 @@ class Pricelist
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity=Parking::class, mappedBy="pricelist")
+     * @ORM\ManyToMany(targetEntity=Parking::class, inversedBy="pricelists")
      */
-    private $parkings;
+    private $parking_price;
 
     public function __construct()
     {
-        $this->parkings = new ArrayCollection();
+        $this->parking_price = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,29 +71,23 @@ class Pricelist
     /**
      * @return Collection|Parking[]
      */
-    public function getParkings(): Collection
+    public function getParkingPrice(): Collection
     {
-        return $this->parkings;
+        return $this->parking_price;
     }
 
-    public function addParking(Parking $parking): self
+    public function addParkingPrice(Parking $parkingPrice): self
     {
-        if (!$this->parkings->contains($parking)) {
-            $this->parkings[] = $parking;
-            $parking->setPricelist($this);
+        if (!$this->parking_price->contains($parkingPrice)) {
+            $this->parking_price[] = $parkingPrice;
         }
 
         return $this;
     }
 
-    public function removeParking(Parking $parking): self
+    public function removeParkingPrice(Parking $parkingPrice): self
     {
-        if ($this->parkings->removeElement($parking)) {
-            // set the owning side to null (unless already changed)
-            if ($parking->getPricelist() === $this) {
-                $parking->setPricelist(null);
-            }
-        }
+        $this->parking_price->removeElement($parkingPrice);
 
         return $this;
     }

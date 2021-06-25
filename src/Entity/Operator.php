@@ -25,17 +25,17 @@ class Operator
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adress;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $zip_code;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $city;
 
@@ -43,6 +43,11 @@ class Operator
      * @ORM\OneToMany(targetEntity=Parking::class, mappedBy="operator")
      */
     private $parkings;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $siret;
 
     public function __construct()
     {
@@ -128,6 +133,18 @@ class Operator
                 $parking->setOperator(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(string $siret): self
+    {
+        $this->siret = $siret;
 
         return $this;
     }
