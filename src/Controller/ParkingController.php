@@ -38,15 +38,7 @@ class ParkingController extends AbstractController
         $linecount = false;
         continue;
       }
-      $p = $price->findOneBy(['id' => 'id']);
-      if(is_null($p)) {
-          $p = new Pricelist;
-          $p->setDuration(15);
-          $p->setPrice(0.8);
-          $this->entityManager->persist($p);
-          $this->entityManager->flush();
-      }
-
+      
       $op = $operator->findOneBy(['siret' => $line[17]]);
       if(is_null($op)) {
         $op = new Operator;
@@ -67,7 +59,6 @@ class ParkingController extends AbstractController
         $result->setYlat((float)$line[19]);
         $result->setNbPlaces($line[7]);
         $result->setOperator($op);
-        $result->setPricelist($p);
         $this->entityManager->persist($result);
         $this->entityManager->flush();
       }
