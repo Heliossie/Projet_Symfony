@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau commentaire compte client{% endblock %}
+
+{% block body %}
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title font-weight-bold text-primary">
+            Création d'un compte client
+        </h1>
+    </div>
+    <div class="card-body">
+        {{form(form_user)}}
+    </div>
+</div>
+{% endblock %}

@@ -7,8 +7,20 @@
 <div class="container">
 
     <h1>Hello {{ controller_name }}! ✅</h1>
-    <h2>User : {{ user.name }} </h2>
-    
+    <h2>User : {{ client.name }} </h2>
+    <ul>
+        <li>{{ client.name }}</li>
+        <li>{{ client.surname }}</li>
+        <li>{{ client.adress }}</li>
+        <li>{{ client.zipcode }}</li>
+        <li>{{ client.city }}</li>
+        <li>{{ client.state }}</li>
+        <li>{{ client.phone }}</li>
+        <li>{{ client.email }}</li>
+        <li>{{ user.username }}</li>
+        <li>{{ user.password }}</li>
+
+    </ul>
 </div>
 
 {% endblock %}
