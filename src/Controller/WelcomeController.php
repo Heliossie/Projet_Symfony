@@ -42,30 +42,24 @@ class WelcomeController extends AbstractController
     {
         $client = new Client();
         $user = new Admin;
-        $form = $this->createForm(ClientFormType::class,$client);
+        $form = $this->createForm(ClientFormType::class, $client);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $username = $form->get('identifiant')->getData();
-            $pwd =$form->get('password1')->getdata();
+            $pwd = $form->get('password1')->getdata();
             $user->setUsername($username);
             $user->setRoles(["ROLE_USER"]);
-            $user->setPassword($passwordHasher->hashPassword($user,$pwd));
+            $user->setPassword($passwordHasher->hashPassword($user, $pwd));
             $em->persist($client);
             $em->flush();
             $user->setClient($client);
             $em->persist($user);
             $em->flush();
 
-            return $this->render('client/index.html.twig',[
-                'controller_name' => 'WelcomeController - Client',
-                'client' => $client,
-                'user' => $user,
-            ]);
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('welcome/newuser.html.twig', [
             'form_user' => $form->createView(),
         ]);
     }
-
 }
