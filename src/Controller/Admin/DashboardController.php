@@ -21,7 +21,7 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        return $this->render('admin/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -32,12 +32,14 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Les parkings', 'fas fa-list', Parking::class);
-        yield MenuItem::linkToCrud('Les clients', 'fas fa-list', Client::class);
-        yield MenuItem::linkToCrud('Les stationnements', 'fas fa-list', Carpark::class);
-        yield MenuItem::linkToCrud('Les factures', 'fas fa-list', Invoice::class);
-        yield MenuItem::linkToCrud('Les opérateurs', 'fas fa-list', Operator::class);
-        yield MenuItem::linkToCrud('Les tarifs', 'fas fa-list', Pricelist::class);
+        yield MenuItem::linkToUrl('Site public', 'fa fa-home', '/');
+        yield MenuItem::linktoDashboard('Tableau de bord', 'fa fa-tachometer-alt');
+        yield MenuItem::section();
+        yield MenuItem::linkToCrud('Les parkings', 'fas fa-parking', Parking::class);
+        yield MenuItem::linkToCrud('Les stationnements', 'fas fa-car', Carpark::class);
+        yield MenuItem::linkToCrud('Les clients', 'fas fa-users', Client::class);
+        yield MenuItem::linkToCrud('Les opérateurs', 'fas fa-user-tie', Operator::class);
+        yield MenuItem::linkToCrud('Les factures', 'fas fa-file-invoice', Invoice::class);
+        yield MenuItem::linkToCrud('Les tarifs', 'fas fa-euro-sign', Pricelist::class);
     }
 }
