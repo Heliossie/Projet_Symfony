@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau commentaire compte client{% endblock %}
+{% block title %}Nouveau compte client{% endblock %}
 
 {% block body %}
 
@@ -9,6 +9,9 @@
         <h1 class="card-title font-weight-bold text-primary">
             Création d'un compte client
         </h1>
+        {% for error in app.flashes('error') %}
+        <h2>{{ error }}</h2>
+        {% endfor %}
     </div>
     <div class="card-body">
         {{form(form_user)}}
