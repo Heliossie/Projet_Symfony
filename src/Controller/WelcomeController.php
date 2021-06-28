@@ -37,7 +37,7 @@ class WelcomeController extends AbstractController
     }
 
     /**
-     * @Route("/newuser", name="new_user")
+     * @Route("/newuser", name="user_new")
      */
     public function newuser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, AdminRepository $adminRepository): Response
     {

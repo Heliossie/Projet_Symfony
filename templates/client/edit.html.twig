@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du compte client 
+{% endblock %}
+
+{% block body %}
+<h1>{{ user.client.name }}</h1>
+ {{ form_start(form_client) }}
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(form_client) }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            {{ form_row(form_client.name, { 'value': user.client.name }) }}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(form_client.surname, { 'value': user.client.surname }) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(form_client.adress, { 'value': user.client.adress }) }}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(form_client.zip_code, { 'value': user.client.zipcode }) }}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(form_client.city, { 'value': user.client.city }) }}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(form_client.state, { 'value': user.client.state }) }}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(form_client.phone, { 'value': user.client.phone }) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(form_client.email,{ 'value': user.client.email }) }}
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col mt-4 d-flex justify-content-between">
+                            {{ form_row(form_client.edit) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form_client) }}
+
+                <div class="card-body">
+                    <h2>{{ user.username }}</h2>
+                    {{form(form_user)}}
+                </div>
+{% endblock %}
