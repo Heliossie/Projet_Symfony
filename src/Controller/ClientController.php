@@ -39,12 +39,12 @@ class ClientController extends AbstractController
     public function invoice(CarparkRepository $carparkRepository): Response
     {
         $user = $this->security->getUser();
+        $invoices = $carparkRepository->findBy(['invoice' => $user->getUserIdentifier()]);
 
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
-            'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
-
+            'invoices' => $invoices,
         ]);
     }
 
