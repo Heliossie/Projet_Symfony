@@ -4,6 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Pricelist;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class PricelistCrudController extends AbstractCrudController
 {
@@ -12,14 +15,18 @@ class PricelistCrudController extends AbstractCrudController
         return Pricelist::class;
     }
 
-    /*
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('un tarif')
+            ->setEntityLabelInPlural('Les Tarifs')
+            ->setDefaultSort(['id' => 'ASC']);
+    }
+
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        yield IdField::new('id');
+        yield NumberField::new('duration', 'Durée');
+        yield NumberField::new('price', 'Prix');
     }
-    */
 }

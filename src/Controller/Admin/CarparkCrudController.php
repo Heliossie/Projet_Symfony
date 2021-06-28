@@ -4,6 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Entity\Carpark;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CurrencyField;
 
 class CarparkCrudController extends AbstractCrudController
 {
@@ -12,14 +18,29 @@ class CarparkCrudController extends AbstractCrudController
         return Carpark::class;
     }
 
-    /*
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('un stationnement')
+            ->setEntityLabelInPlural('Les Stationnements')
+            ->setDefaultSort(['id' => 'ASC']);
+    }
+
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        yield IdField::new('id');
+        yield DateTimeField::new('arrival', 'Arrivée')
+            ->setFormTypeOptions([
+                'html5' => true,
+                'years' => range(date('Y'), date('Y') + 2),
+                'widget' => 'single_text',
+            ]);
+        yield DateTimeField::new('departure', 'Départ')
+            ->setFormTypeOptions([
+                'html5' => true,
+                'years' => range(date('Y'), date('Y') + 2),
+                'widget' => 'single_text',
+            ]);
+        yield NumberField::new('price', 'Prix');
     }
-    */
 }
