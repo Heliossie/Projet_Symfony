@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Parking;
 use App\Repository\CarparkRepository;
+use App\Repository\ParkingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,7 +51,7 @@ class ClientController extends AbstractController
     /**
      * @Route("/user/carpark", name="user_carpark")
      */
-    public function carpark(CarparkRepository $carparkRepository): Response
+    public function carpark(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository, Parking $parking): Response
     {
         $user = $this->security->getUser();
 
@@ -57,6 +59,7 @@ class ClientController extends AbstractController
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
             'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
+            'parkings' => $parkingRepository->findBy(['parking' => $parking->getID()]),
         ]);
     }
 }

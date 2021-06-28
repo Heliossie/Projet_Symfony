@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello WelcomeController!{% endblock %}
+{% block title %}Simulation{% endblock %}
 
 {% block body %}
 
 <div class="container">
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Bonjour !</h1>
     {% for carpark in carparks %}
 
     {% endfor %}
     
+    {% for parking in parkings %}
+        
+    {% endfor %}
 </div>
 
 {% endblock %}
