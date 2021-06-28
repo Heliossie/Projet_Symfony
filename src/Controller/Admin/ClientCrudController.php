@@ -33,7 +33,7 @@ class ClientCrudController extends AbstractCrudController
         yield TextField::new('zip_code', 'CP')
             ->hideOnIndex();
         yield TextField::new('city', 'Ville');
-        yield TextField::new('state', 'Dépt')
+        yield TextField::new('state', 'Pays')
             ->hideOnIndex();
         yield TextField::new('phone', 'Téléphone')
             ->hideOnIndex();
