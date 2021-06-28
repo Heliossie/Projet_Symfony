@@ -7,6 +7,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+// use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 
 class PricelistCrudController extends AbstractCrudController
 {
@@ -25,8 +27,7 @@ class PricelistCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id');
-        yield NumberField::new('duration', 'Durée');
+        yield TimeField::new('duration', 'Durée');
         yield NumberField::new('price', 'Prix');
     }
 }

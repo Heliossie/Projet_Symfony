@@ -26,14 +26,16 @@ class ParkingCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id');
-        yield TextField::new('id_ext', 'ID externe');
+        yield TextField::new('id_ext', 'ID externe')
+                ->hideOnIndex();
         yield TextField::new('name', 'Nom');
         yield TextField::new('adress', 'Adresse');
         yield TextField::new('insee')
                 ->hideOnIndex();
-        yield NumberField::new('xlong', 'Long');
-        yield NumberField::new('ylat', 'Lat');
+        yield NumberField::new('xlong', 'Long')
+                ->hideOnIndex();
+        yield NumberField::new('ylat', 'Lat')
+                ->hideOnIndex();
         yield NumberField::new('nb_places', 'Nb. places');
     }
 }
