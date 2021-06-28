@@ -32,7 +32,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/invoice", name="invoice")
+     * @Route("/user/invoice", name="user_invoice")
      */
     public function invoice(CarparkRepository $carparkRepository): Response
     {
@@ -47,7 +47,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/carpark", name="carpark")
+     * @Route("/user/carpark", name="user_carpark")
      */
     public function carpark(CarparkRepository $carparkRepository): Response
     {
