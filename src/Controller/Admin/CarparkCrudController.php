@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CurrencyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class CarparkCrudController extends AbstractCrudController
 {
@@ -28,7 +29,9 @@ class CarparkCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id');
+        yield AssociationField::new('client');
+        yield AssociationField::new('invoice', 'Facture');
+        yield AssociationField::new('parking');
         yield DateTimeField::new('arrival', 'Arrivée')
             ->setFormTypeOptions([
                 'html5' => true,

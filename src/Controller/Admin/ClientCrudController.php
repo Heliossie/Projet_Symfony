@@ -27,7 +27,6 @@ class ClientCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id');
         yield TextField::new('name', 'Prénom');
         yield TextField::new('surname', 'Nom');
         yield TextField::new('adress', 'Adresse');
