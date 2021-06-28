@@ -10,10 +10,17 @@
     {% for carpark in carparks %}
 
     {% endfor %}
-    
+
+    <h2>Garez-vous</h2>
     {% for parking in parkings %}
-        
+        <p>Parking : {{ parking.name }}</p>
+        <p>adresse : {{ parking.adress }}</p>
+        <p>Nb. de places : {{ parking.NbPlaces }}</p>
+        <p>Long : {{ parking.xlong }} - Lat : {{ parking.ylat }}</p>
+        <button>Stationner</button>
+        <br>
     {% endfor %}
+    
 </div>
 
 {% endblock %}

@@ -56,7 +56,7 @@ class ClientController extends AbstractController
     /**
      * @Route("/user/carpark", name="user_carpark")
      */
-    public function carpark(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository, Parking $parking): Response
+    public function carpark(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository): Response
     {
         $user = $this->security->getUser();
 
@@ -64,7 +64,7 @@ class ClientController extends AbstractController
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
             'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
-            'parkings' => $parkingRepository->findBy(['parking' => $parking->getID()]),
+            'parkings' => $parkingRepository->findAll(),
         ]);
     }
 
