@@ -20,7 +20,7 @@ class Pricelist
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="time")
      */
     private $duration;
 
@@ -44,12 +44,12 @@ class Pricelist
         return $this->id;
     }
 
-    public function getDuration(): ?int
+    public function getDuration()
     {
         return $this->duration;
     }
 
-    public function setDuration(int $duration): self
+    public function setDuration($duration): self
     {
         $this->duration = $duration;
 

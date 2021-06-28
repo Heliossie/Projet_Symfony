@@ -27,11 +27,6 @@ class Invoice
     /**
      * @ORM\Column(type="float")
      */
-    private $subscription;
-
-    /**
-     * @ORM\Column(type="float")
-     */
     private $amount;
 
     /**
@@ -61,17 +56,6 @@ class Invoice
         return $this;
     }
 
-    public function getSubscription(): ?float
-    {
-        return $this->subscription;
-    }
-
-    public function setSubscription(float $subscription): self
-    {
-        $this->subscription = $subscription;
-
-        return $this;
-    }
 
     public function getAmount(): ?float
     {
@@ -113,5 +97,10 @@ class Invoice
         }
 
         return $this;
+    }
+
+    public function __toString():string
+    {
+        return $this->id;
     }
 }

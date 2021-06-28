@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin;
-use App\Entity\Client;
+use App\Entity\Parking;
 use App\Form\UserEditFormType;
 use App\Form\ClientEditFormType;
 use App\Repository\CarparkRepository;
@@ -12,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ParkingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -44,19 +44,19 @@ class ClientController extends AbstractController
     public function invoice(CarparkRepository $carparkRepository): Response
     {
         $user = $this->security->getUser();
+        $invoices = $carparkRepository->findBy(['invoice' => $user->getUserIdentifier()]);
 
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
-            'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
-
+            'invoices' => $invoices,
         ]);
     }
 
     /**
      * @Route("/user/carpark", name="user_carpark")
      */
-    public function carpark(CarparkRepository $carparkRepository): Response
+    public function carpark(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository, Parking $parking): Response
     {
         $user = $this->security->getUser();
 
@@ -64,6 +64,7 @@ class ClientController extends AbstractController
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
             'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
+            'parkings' => $parkingRepository->findBy(['parking' => $parking->getID()]),
         ]);
     }
 
