@@ -2,35 +2,36 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
-		{# Run `composer require symfony/webpack-encore-bundle`
-						           and uncomment the following Encore helpers to start using Symfony UX #}
+		{# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+					<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
 		{% endblock %}
 
 		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
+			    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+			<script src="{{ asset('map.js') }}" defer></script>
+			{# {{ encore_entry_script_tags('app') }} #}
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 		{% endblock %}
 	</head>
 	<body>
-		<header>
-			<a href="{{ path('app_login') }}">Se connecter</a>
-			<a href="{{ path('user_new') }}">Créer un compte</a>
-			<a href="{{ path('user_edit') }}">Modifier un compte</a>
-            <hr>
-			<a href="{{ path('welcome') }}">Accueil</a>
-			<a href="{{ path('user') }}">Espace Client</a>
-			<a href="{{ path('user_parking') }}">Stationnement</a>
-			<a href="{{ path('parking') }}">Parking</a>
-            <hr>
-		</header>
+
+		{% include './partial/header.html.twig' %}
 
 		{% block body %}{% endblock %}
 
-		<footer></footer>
+		{% include './partial/footer.html.twig' %}
+		
 	</body>
 </html>
