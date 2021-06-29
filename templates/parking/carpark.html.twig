@@ -7,16 +7,20 @@
 
 	<div class="container">
 
-		<h1>Bonjour !</h1>
-		{% for carpark in carparks %}
-        <p>Carpark arrivée : {{ carpark.arrival }}</p>
-        <p>Carpark invoice : {{ carpark.invoice.date }}</p>
-        {% endfor %}
+		<h1>Simulation du badge</h1>
+        {% if carparks %}
+        <h2>Stationnement en cours</h2>
+        <div class="card w-25 p-3 m-4">
+            <p>Parking : {{ carparks.parking.name }}</p>
+            <p>Arrivée : {{ carparks.arrival|format_datetime('medium', 'short') }}</p>
+            {# <a class="btn" href="{{ path('user_carpark', { id: parking.id }) }}">Sortir</a> #}
+            </div>
+        {% endif %}
 
 		<h2>Garez-vous</h2>
 
 		{% for parking in parkings %}
-			<div class="card w-25 mb-2">
+			<div class="card w-25 p-3 m-4">
 				<p>Parking :
 					{{ parking.name }}</p>
 				<p>adresse :
