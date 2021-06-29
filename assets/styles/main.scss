@@ -1,3 +1,5 @@
+$margin-nav-links: 20px;
+
 nav {
   .nav-logo {
     width: 52px;
@@ -12,12 +14,18 @@ nav {
   }
 
   .nav-link {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: $margin-nav-links;
+    margin-right: $margin-nav-links;
   }
 
   .dropdown-menu {
     position: absolute;
     right: 32px;
+  }
+}
+
+footer {
+  .footer-logo {
+    width: 80px;
   }
 }
