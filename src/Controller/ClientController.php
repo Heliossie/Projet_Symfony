@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Carpark;
+use App\Entity\Invoice;
 use App\Entity\Parking;
 use App\Form\UserEditFormType;
 use App\Form\ClientEditFormType;
+use App\Form\ParkingListFormType;
 use App\Repository\CarparkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,9 +57,9 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/carpark", name="user_carpark")
+     * @Route("/user/carpark", name="user_parking")
      */
-    public function carpark(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository): Response
+    public function parking(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository): Response
     {
         $user = $this->security->getUser();
 
@@ -64,6 +67,32 @@ class ClientController extends AbstractController
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
             'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
+            'parkings' => $parkingRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/user/carpark/{id}",name="user_carpark")
+     */
+    public function carpark($id, ParkingRepository $parkingRepository): Response
+    {
+        $user = $this->getUser();
+        $client = $user->getClient();
+        $parking = $parkingRepository->findOneBy(['id' => $id]);
+        $carpark = new Carpark;
+        $carpark->setArrival(new \DateTime());
+        $carpark->setParking($parking);
+        $carpark->setClient($client);
+        $invoice = new Invoice();
+        $invoice->setDate(new \DateTime());
+        $invoice->setAmount(0); 
+        $carpark->setInvoice($invoice);
+        //var_dump($carpark);
+
+        return $this->render('parking/carpark.html.twig', [
+            'controller_name' => 'ParkingController - carpark',
+            'user' => $user,
+            'carparks' => $carpark,
             'parkings' => $parkingRepository->findAll(),
         ]);
     }
