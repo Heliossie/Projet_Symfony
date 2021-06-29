@@ -1,0 +1,49 @@
+<header>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+		<a class="navbar-brand d-flex align-items-center justify-content-start mx-5" href="{{ path('welcome') }}">
+			<img src="/images/logo.png" class="nav-logo mx-2" alt="">
+			<h1 class="nav-title">Park-It</h1>
+		</a>
+
+		<button class="navbar-toggler mx-5" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse justify-content-end mx-5" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link text-white" href="{{ path('user') }}">Espace Client</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="{{ path('user_carpark') }}">Stationnement</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="{{ path('parking') }}">Parking</a>
+				</li>
+			</ul>
+			{% if app.user %}
+				<div class="dropdown">
+					<img src="/images/user_connect.png" class="nav-user mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="">
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						{% if app.user.roles[0] == "ROLE_ADMIN" %}
+							<a class="dropdown-item active" href="{{ path('admin') }}">Dashboard Admin</a>
+						{% endif %}
+						<a class="dropdown-item" href="{{ path('user_edit') }}">Modifier mon compte</a>
+						<a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
+					</div>
+				</div>
+			{% else %}
+				<div class="dropdown">
+					<img src="/images/user.png" class="nav-user mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="">
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
+						<a class="dropdown-item" href="{{ path('user_new') }}">S'inscrire</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</nav>
+
+</header>
