@@ -6,27 +6,28 @@
 {% block body %}
 
 	<div class="container">
+		<div class="card">
 
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
-		<h2>User :
-			{{ user.client.id }}
-		</h2>
-		<a href="{{ path('user_invoice') }}">Voir mes factures</a>
-		<ul>
-			<li>{{ user.username }}</li>
-			<li>{{ user.password }}</li>
-			<hr>
-			<li>{{ user.client.name }}</li>
-			<li>{{ user.client.surname }}</li>
-			<li>{{ user.client.adress }}</li>
-			<li>{{ user.client.zipcode }}</li>
-			<li>{{ user.client.city }}</li>
-			<li>{{ user.client.state }}</li>
-			<li>{{ user.client.phone }}</li>
-			<li>{{ user.client.email }}</li>
+			<h1>Hello
+				{{ controller_name }}! ✅</h1>
+			<h2>User :
+				{{ user.client.id }}
+			</h2>
+			<a href="{{ path('user_invoice') }}">Voir mes factures</a>
+			<ul>
+				<li>{{ user.username }}</li>
+				<li>{{ user.password }}</li>
+				<hr>
+				<li>{{ user.client.name }}</li>
+				<li>{{ user.client.surname }}</li>
+				<li>{{ user.client.adress }}</li>
+				<li>{{ user.client.zipcode }}</li>
+				<li>{{ user.client.city }}</li>
+				<li>{{ user.client.state }}</li>
+				<li>{{ user.client.phone }}</li>
+				<li>{{ user.client.email }}</li>
 
-		</ul>
+			</ul>
+		</div>
 	</div>
-
 {% endblock %}
