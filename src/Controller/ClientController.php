@@ -79,6 +79,7 @@ class ClientController extends AbstractController
         $form_client->handleRequest($request);
         $form_user = $this->createForm(UserEditFormType::class, $user);
         $form_user->handleRequest($request);
+
         if ($form_client->isSubmitted() && $form_client->isValid()) {
             //Modification des données clients
             $user->setClient($form_client->getData());
@@ -90,6 +91,8 @@ class ClientController extends AbstractController
 
         if ($form_user->isSubmitted() && $form_user->isValid()) {
             //Modification des données user
+            $pwd = $form_user->get('password')->getdata();
+            $user->setPassword($passwordHasher->hashPassword($user, $pwd));
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute('user');

@@ -16,11 +16,9 @@ class UserEditFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        // ->add('username',TextType::class, [
-        //     'label' => 'Identifiant',
-        //     'attr' => ['disabled' => false],
-        //     // 'mapped' => false,
-        //     ])
+        // ajouter champ password à vérifier avec celui du getUser
+
+
         ->add('password',RepeatedType::class, [
             'type' => PasswordType::class,
             'invalid_message' => 'Le mot de passe doit être le même.',
