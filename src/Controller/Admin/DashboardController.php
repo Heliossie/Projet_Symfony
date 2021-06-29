@@ -13,6 +13,7 @@ use App\Entity\Invoice;
 use App\Entity\Operator;
 use App\Entity\Parking;
 use App\Entity\Pricelist;
+use App\Entity\SubscriptionPrice;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -41,5 +42,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Les opérateurs', 'fas fa-user-tie', Operator::class);
         yield MenuItem::linkToCrud('Les factures', 'fas fa-file-invoice', Invoice::class);
         yield MenuItem::linkToCrud('Les tarifs', 'fas fa-euro-sign', Pricelist::class);
+        yield MenuItem::linkToCrud('Les abonnements', 'fas fa-list-alt', SubscriptionPrice::class);
     }
 }
