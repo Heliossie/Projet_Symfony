@@ -1,10 +1,32 @@
-$primary: #3E92CC;
-$secondary: #6EACD8;
-$dark: #435B6C;
-$light: #F5F5F5;
-@import '~bootstrap/scss/bootstrap';
-@import './main';
+$primary: #3e92cc;
+$secondary: #6eacd8;
+$dark: #435b6c;
+$light: #f5f5f5;
+@import "~bootstrap/scss/bootstrap";
+@import "./main";
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/public/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("/public/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+* {
+  font-family: "Roboto";
+}
 
 body {
-    background-color: #f1f1f1f1;
+  background-color: #f1f1f1f1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins";
 }
