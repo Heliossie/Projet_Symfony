@@ -1,26 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Simulation{% endblock %}
+{% block title %}Simulation
+{% endblock %}
 
 {% block body %}
 
-<div class="container">
+	<div class="container">
 
-    <h1>Bonjour !</h1>
-    {% for carpark in carparks %}
+		<h1>Bonjour !</h1>
+		{% for carpark in carparks %}
+        <p>Carpark arrivée : {{ carpark.arrival }}</p>
+        <p>Carpark invoice : {{ carpark.invoice.date }}</p>
+        {% endfor %}
 
-    {% endfor %}
+		<h2>Garez-vous</h2>
 
-    <h2>Garez-vous</h2>
-    {% for parking in parkings %}
-        <p>Parking : {{ parking.name }}</p>
-        <p>adresse : {{ parking.adress }}</p>
-        <p>Nb. de places : {{ parking.NbPlaces }}</p>
-        <p>Long : {{ parking.xlong }} - Lat : {{ parking.ylat }}</p>
-        <button>Stationner</button>
-        <br>
-    {% endfor %}
-    
-</div>
+		{% for parking in parkings %}
+			<div class="card w-25 mb-2">
+				<p>Parking :
+					{{ parking.name }}</p>
+				<p>adresse :
+					{{ parking.adress }}</p>
+				<p>Nb. de places :
+					{{ parking.NbPlaces }}</p>
+                <a class="btn" href="{{ path('user_carpark', { id: parking.id }) }}">Stationner</a>
+			</div>
+		{% endfor %}
 
+
+	</div>
 {% endblock %}
