@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
@@ -10,9 +11,16 @@
 						           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+					<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
 		{% endblock %}
 
 		{% block javascripts %}
+			    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+			<script src="{{ asset('map.js') }}" defer></script>
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
