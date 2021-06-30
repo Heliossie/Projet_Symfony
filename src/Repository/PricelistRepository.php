@@ -22,29 +22,40 @@ class PricelistRepository extends ServiceEntityRepository
     // /**
     //  * @return Pricelist[] Returns an array of Pricelist objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findByPrice($value)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+            ->andWhere("p.duration <= :val")
             ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.price', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
+    // public function findByPrice()
+    // {
+    //     $em = $this->getEntityManager();
+    //     $query = $em->createQuery(
+    //         "SELECT p.price FROM App\Entity\Pricelist p WHERE p.duration<='00:00:30'  ORDER BY p.price DESC"
+    //     );
 
-    /*
-    public function findOneBySomeField($value): ?Pricelist
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    //     return $query->getResult()
+    //     ;
+    // }
+
+    
+    // public function findOneBySomeField($value): ?Pricelist
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.duration <= :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('p.price', 'DESC')
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
+    
 }

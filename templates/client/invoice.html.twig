@@ -8,6 +8,8 @@
 
     <h1>Hello {{ controller_name }}! ✅</h1>
     <h2>User : {{ user.client.name }} </h2>
+    <p>Durée : {{ duration }}</p>
+    <p>Prix à payer : {{ price }}</p>
     <h3>Factures :</h3>
     {% for invoice in invoices %}
     <p>{{ invoice }}</p>
