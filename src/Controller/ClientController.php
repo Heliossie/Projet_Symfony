@@ -43,11 +43,53 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/invoice/{id}", name="user_invoice")
+     * @Route("/user/invoice", name="user_invoice")
      */
     public function invoice(CarparkRepository $carparkRepository): Response
     {
         $user = $this->security->getUser();
+        $invoices = $carparkRepository->findBy(['invoice' => $user->getUserIdentifier()]);
+
+        return $this->render('client/invoice.html.twig', [
+            'controller_name' => 'ClientController - Factures',
+            'user' => $user,
+            'invoices' => $invoices,
+        ]);
+    }
+
+    /**
+     * @Route("/user/invoice/{id}", name="user_invoice_current")
+     */
+    public function currentInvoice($id,CarparkRepository $carparkRepository): Response
+    {
+        $user = $this->getUser();
+        $carpark = $carparkRepository->findOneBy(['id' => $id]);
+        $departure_date = new \DateTime();
+        $carpark->setDeparture($departure_date);
+
+        // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
+        // On détermine si le client a déjà stationné dans le mois en cours
+        
+        $current_month = $departure_date->format('n');
+        $current_year = $departure_date->format('Y');
+        $current_carparks= $carparkRepository->findBy(['MONTH(departure)' => $current_month,'YEAR(departure)'=>$current_year,'client' => $user->getClient()]);
+        
+        if ($current_carparks) 
+        {
+            $invoice = $current_carparks[0]->getInvoice();
+        }
+        else
+        {
+            $invoice = new Invoice();
+            $year = $departure_date->format('Y');
+            $month = $departure_date->format('n');
+            $date_invoice = date('Y-m-d',mktime(0,0,0,$month+1,1,$year));
+            $invoice->setDate($date_invoice);
+            $invoice->setAmount(0);
+        }
+        
+        $carpark->setInvoice($invoice);
+
         $invoices = $carparkRepository->findBy(['invoice' => $user->getUserIdentifier()]);
 
         return $this->render('client/invoice.html.twig', [
@@ -71,6 +113,7 @@ class ClientController extends AbstractController
             'parkings' => $parkingRepository->findAll(),
         ]);
     }
+    
 
     /**
      * @Route("/user/carpark/{id}",name="user_carpark")
@@ -88,27 +131,7 @@ class ClientController extends AbstractController
         $em->persist($carpark);
         $em->flush();
 
-        // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
-        // On détermine si le client a déjà stationné dans le mois en cours
         
-        // $current_month = $departure_date->format('n');
-
-        // $current_carpark= $carparkRepository->findBy(['MONTH(departure)' => $current_month]);
-        // if ($current_carpark) 
-        // {
-        //     $invoice = $current_carpark[0]->getInvoice();
-        // }
-        // else
-        // {
-        //     $invoice = new Invoice();
-            // $year = $departure_date->format('Y');
-            // $month = $departure_date->format('n');
-            // $date_invoice = date('Y-m-d',mktime(0,0,0,$month+1,1,$year));
-        //     $invoice->setDate($date_invoice);
-        //     $invoice->setAmount(0);
-        // }
-        
-        // $carpark->setInvoice($invoice);
 
         return $this->render('parking/carpark.html.twig', [
             'controller_name' => 'ParkingController - carpark',
