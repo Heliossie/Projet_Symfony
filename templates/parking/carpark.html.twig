@@ -13,10 +13,11 @@
         <div class="card w-25 p-3 m-4">
             <p>Parking : {{ carparks.parking.name }}</p>
             <p>Arrivée : {{ carparks.arrival|format_datetime('medium', 'short') }}</p>
-            {# <a class="btn" href="{{ path('user_carpark', { id: parking.id }) }}">Sortir</a> #}
+            <a class="btn" href="{{ path('user_invoice', { id: carparks.id }) }}">Sortir</a>
             </div>
-        {% endif %}
-
+        
+		{% else %}
+			
 		<h2>Garez-vous</h2>
 
 		{% for parking in parkings %}
@@ -31,6 +32,7 @@
 			</div>
 		{% endfor %}
 
+		{% endif %}
 
 	</div>
 {% endblock %}

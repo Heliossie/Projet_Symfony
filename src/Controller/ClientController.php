@@ -9,6 +9,7 @@ use App\Form\UserEditFormType;
 use App\Form\ClientEditFormType;
 use App\Form\ParkingListFormType;
 use App\Repository\CarparkRepository;
+use App\Repository\InvoiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -42,7 +43,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/invoice", name="user_invoice")
+     * @Route("/user/invoice/{id}", name="user_invoice")
      */
     public function invoice(CarparkRepository $carparkRepository): Response
     {
@@ -74,20 +75,40 @@ class ClientController extends AbstractController
     /**
      * @Route("/user/carpark/{id}",name="user_carpark")
      */
-    public function carpark($id, ParkingRepository $parkingRepository): Response
+    public function carpark($id, ParkingRepository $parkingRepository, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $client = $user->getClient();
         $parking = $parkingRepository->findOneBy(['id' => $id]);
         $carpark = new Carpark;
-        $carpark->setArrival(new \DateTime());
+        $arrival_date = new \DateTime();
+        $carpark->setArrival($arrival_date);
         $carpark->setParking($parking);
         $carpark->setClient($client);
-        $invoice = new Invoice();
-        $invoice->setDate(new \DateTime());
-        $invoice->setAmount(0); 
-        $carpark->setInvoice($invoice);
-        //var_dump($carpark);
+        $em->persist($carpark);
+        $em->flush();
+
+        // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
+        // On détermine si le client a déjà stationné dans le mois en cours
+        
+        // $current_month = $departure_date->format('n');
+
+        // $current_carpark= $carparkRepository->findBy(['MONTH(departure)' => $current_month]);
+        // if ($current_carpark) 
+        // {
+        //     $invoice = $current_carpark[0]->getInvoice();
+        // }
+        // else
+        // {
+        //     $invoice = new Invoice();
+            // $year = $departure_date->format('Y');
+            // $month = $departure_date->format('n');
+            // $date_invoice = date('Y-m-d',mktime(0,0,0,$month+1,1,$year));
+        //     $invoice->setDate($date_invoice);
+        //     $invoice->setAmount(0);
+        // }
+        
+        // $carpark->setInvoice($invoice);
 
         return $this->render('parking/carpark.html.twig', [
             'controller_name' => 'ParkingController - carpark',

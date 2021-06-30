@@ -1,14 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello WelcomeController!{% endblock %}
+{% block title %}Hello WelcomeController!
+{% endblock %}
 
 {% block body %}
 
-<div class="container">
+	<section class="hero shadow-lg">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="d-flex flex-column justify-content-center align-items-center m-5">
+						<h1>Park-It</h1>
+						<h2 class="mt-2">Garez vous facilement !</h2>
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    
-    
-</div>
+						<a href="{{ path('app_login') }}" class="btn-custom d-flex justify-content-center align-items-center mt-4 p-3"><span>Abonnez-vous</span></a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="container">
+		<div class="row p-4 text-center">
+			<div class="col">
+				<img src="images/easy-use.png" class="brand-value mb-4" alt="">
+				<h6>Facile à utiliser</h6>
+			</div>
+			<div class="col">
+				<img src="images/circular-arrows.png" class="brand-value mb-4" alt="">
+				<h6>Automatique</h6>
+			</div>
+			<div class="col">
+				<img src="images/shield.png" class="brand-value mb-4" alt="">
+				<h6>Sécurisé</h6>
+			</div>
+		</div>
+	</div>
+
+	<div class="container text-center">
+		<h3>Park-It Easy !</h3>
+		<div class="card shadow mx-4 mb-4 p-4 d-flex justify-content-center align-items-end">
+			<p>
+				Park-It est en partenariat avec l’agglomération de Montpellier, permettant un accés facile et automatique à tous les parkings public en toute sécurité !
+				Nous développons actuellement la V2 du téléparking en région
+				Occitanie dans le cadre d’un partenariat technologique. L’agglomération de Nantes s’est
+				déjà positionné pour l’installation de Park-It sur son territoire.
+			</p>
+			<a href="{{ path('app_login') }}" class="btn-custom d-flex justify-content-center align-items-center p-3">Abonnez-vous</a>
+
+		</div>
+	</div>
 
 {% endblock %}

@@ -46,7 +46,7 @@ class Carpark
 
     /**
      * @ORM\ManyToOne(targetEntity=Invoice::class, inversedBy="carparks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $invoice;
 

@@ -1,0 +1,27 @@
+.hero {
+  width: 100%;
+  height: 500px;
+  background-image: linear-gradient(rgba(67, 91, 108, 1), rgba(0, 0, 0, 0.4)), url("/public/images/hero.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  h1 {
+    font-weight: 900;
+    font-size: 68px;
+    line-height: 108px;
+    letter-spacing: 0.05em;
+    color: $light;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 56px;
+    color: $light;
+  }
+}
+
+.brand-value {
+  width: 120px;
+}
