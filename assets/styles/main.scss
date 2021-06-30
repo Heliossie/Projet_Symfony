@@ -29,3 +29,39 @@ footer {
     width: 80px;
   }
 }
+
+.btn-custom {
+  width: 200px;
+  height: 60px;
+  color: $light;
+  font-weight: 600;
+  font-size: 22px;
+  background-color: $primary;
+  box-shadow: -6px 6px 0px $secondary;
+  border-radius: 5px;
+
+  span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  span:after {
+    content: "\00bb";
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+  .btn-custom:hover span {
+    padding-right: 25px;
+  }
+
+  .btn-custom:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+}
