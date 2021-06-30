@@ -40,6 +40,10 @@ class WelcomeController extends AbstractController
      */
     public function newuser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, AdminRepository $adminRepository): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('welcome');
+        }
+        
         $client = new Client();
         $user = new Admin;
         $form = $this->createForm(ClientFormType::class, $client);
