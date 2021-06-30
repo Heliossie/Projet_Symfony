@@ -29,15 +29,6 @@ class Pricelist
      */
     private $price;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Parking::class, inversedBy="pricelists")
-     */
-    private $parking_price;
-
-    public function __construct()
-    {
-        $this->parking_price = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -64,30 +55,6 @@ class Pricelist
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Parking[]
-     */
-    public function getParkingPrice(): Collection
-    {
-        return $this->parking_price;
-    }
-
-    public function addParkingPrice(Parking $parkingPrice): self
-    {
-        if (!$this->parking_price->contains($parkingPrice)) {
-            $this->parking_price[] = $parkingPrice;
-        }
-
-        return $this;
-    }
-
-    public function removeParkingPrice(Parking $parkingPrice): self
-    {
-        $this->parking_price->removeElement($parkingPrice);
 
         return $this;
     }
