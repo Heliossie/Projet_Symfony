@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Admin;
 use App\Entity\Client;
 use App\Form\ClientFormType;
@@ -41,6 +40,10 @@ class WelcomeController extends AbstractController
      */
     public function newuser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, AdminRepository $adminRepository): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('welcome');
+        }
+        
         $client = new Client();
         $user = new Admin;
         $form = $this->createForm(ClientFormType::class, $client);
@@ -50,7 +53,7 @@ class WelcomeController extends AbstractController
             // on vérifie si le username n'existe pas déjà dans la table admin
             $count= $adminRepository->findBy(['username' => $username]);
             if ($count) {
-                $this->addFlash('error',"L'identifiant saisi existe déjà, vous devez en choisir un autre.");
+                $this->addFlash('error', "L'identifiant saisi existe déjà, vous devez en choisir un autre.");
                 return $this->redirectToRoute('user_new');
             }
             $pwd = $form->get('password')->getdata();
@@ -67,6 +70,27 @@ class WelcomeController extends AbstractController
         }
         return $this->render('welcome/newuser.html.twig', [
             'form_user' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/termes", name="termes")
+     */
+    public function terme(): Response
+    {
+        return $this->render('welcome/termes.html.twig', [
+            'controller_name' => 'WelcomeController - Termes',
+        ]);
+    }
+
+    /**
+     * @Route("/conf", name="confidentialites")
+     */
+    public function confidentialite(): Response
+    {
+        return $this->render('welcome/conf.html.twig', [
+            'controller_name' => 'WelcomeController - Termes',
         ]);
     }
 }

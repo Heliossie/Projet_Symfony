@@ -4,7 +4,7 @@
 
 			<div class="col-4">
 				<h3>Park-It</h3>
-				<h4>Garez-vous façilement !</h4>
+				<h4>Garez-vous facilement !</h4>
 			</div>
 			<div class="col-4 text-center">
 				<a href="{{ path('welcome') }}">
@@ -16,7 +16,7 @@
 					<br>
 					Tel : +33 6 33 33 33 33
 					<br>
-					Fix : +33 6 33 33 33 33
+					Fax : +33 6 33 33 33 33
 					<br>
 					Mail : contact@parkit.fr
 				</p>
@@ -27,21 +27,18 @@
 				<div class="col-8">
 					<ul class="list-inline">
 						<li href="" class="list-inline-item">
-							<a href="">Termes et conditions d'utilisation</a>
+							<a href="{{ path('termes') }}">Termes et conditions d'utilisation</a>
 						</li>
 						<li class="list-inline-item">
-							<a href="">Politique de confidentialité</a>
+							<a href="{{ path('confidentialites') }}">Politique de confidentialité et de cookie</a>
 						</li>
 						<li class="list-inline-item">
-							<a href="">Politique de cookies</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="">Contact</a>
+							<a href="{{ path('contact') }}">Contact</a>
 						</li>
 					</ul>
 				</div>
 				<div class="col-4 text-end">
-					<a href="{{ path('app_login') }}" class="btn btn-primary text-light">Abonnez-vous</a>
+					<a href="{{ path('user_new') }}" class="btn btn-primary text-light">Abonnez-vous</a>
 				</div>
 
 			</div>
