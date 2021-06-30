@@ -1,20 +1,88 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau compte client{% endblock %}
+{% block title %}Nouveau compte client
+{% endblock %}
 
 {% block body %}
 
-<div class="card">
-    <div class="card-header">
-        <h1 class="card-title font-weight-bold text-primary">
-            Création d'un compte client
-        </h1>
-        {% for error in app.flashes('error') %}
-        <h2>{{ error }}</h2>
-        {% endfor %}
-    </div>
-    <div class="card-body">
-        {{form(form_user)}}
-    </div>
-</div>
-{% endblock %}
+	<div class="container p-5">
+		<div class="card shadow-lg">
+
+			<div class="card-header p-4">
+				<h1 class="h3 card-title font-weight-bold text-primary">
+					Création d'un compte client :
+				</h1>
+				{% for error in app.flashes('error') %}
+					<h2>{{ error }}</h2>
+				{% endfor %}
+			</div>
+			<div class="card-body p-4">
+				{{ form_start(form_user) }}
+
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_user.name) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_user.surname) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-8">
+						{{ form_row(form_user.adress) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_user.zip_code) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_user.city) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_user.state) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_user.phone) }}
+					</div>
+					<div class="col-8">
+						{{ form_row(form_user.email) }}
+					</div>
+				</div>
+
+				<h1 class="h4 font-weight-bold text-primary mt-4">
+					Informations de connexion :
+				</h1>
+
+				<hr>
+
+				<div class="row d-flex justify-content-center">
+					<div class="col-6">
+						{{ form_row(form_user.identifiant) }}
+					</div>
+				</div>
+				<div class="row d-flex justify-content-center">
+					<div class="col-6">
+						{{ form_row(form_user.password) }}
+					</div>
+				</div>
+
+
+				<hr>
+
+				<div class="row mt-4">
+					<div class="col d-flex justify-content-start">
+						<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+					</div>
+					<div class="col d-flex justify-content-end">
+						{{ form_row(form_user.submit) }}
+					</div>
+				</div>
+
+				{{ form_end(form_user) }}
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}
