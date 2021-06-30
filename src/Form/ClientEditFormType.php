@@ -24,7 +24,7 @@ class ClientEditFormType extends AbstractType
             ->add('state',TextType::class,['label' => 'Pays'])
             ->add('phone',TelType::class,['label' =>'Téléphone'])
             ->add('email',EmailType::class)
-            ->add('edit',SubmitType::class,['label' =>'Modifier'])
+            ->add('edit',SubmitType::class,['label' =>'Confirmer la modification'])
         ;
     }
 

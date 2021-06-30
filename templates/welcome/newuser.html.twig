@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau compte client
+{% block title %}Parkit - Nouveau compte client
 {% endblock %}
 
 {% block body %}
@@ -12,9 +12,10 @@
 				<h1 class="h3 card-title font-weight-bold text-primary">
 					Création d'un compte client :
 				</h1>
-				{% for error in app.flashes('error') %}
-					<h2>{{ error }}</h2>
-				{% endfor %}
+				<p class="text-muted">
+					<span class="asterisk">*</span>
+					: obligatoire</p>
+
 			</div>
 			<div class="card-body p-4">
 				{{ form_start(form_user) }}
@@ -52,7 +53,7 @@
 					</div>
 				</div>
 
-				<h1 class="h4 font-weight-bold text-primary mt-4">
+				<h1 class="h5 font-weight-bold text-primary mt-4">
 					Informations de connexion :
 				</h1>
 
@@ -60,7 +61,14 @@
 
 				<div class="row d-flex justify-content-center">
 					<div class="col-6">
+
+						{% for error in app.flashes('error') %}
+							<div class="alert alert-danger" role="alert">
+								{{ error }}
+							</div>
+						{% endfor %}
 						{{ form_row(form_user.identifiant) }}
+						<p class="text-muted">(Attention vous ne pourrez pas le modifier)</p>
 					</div>
 				</div>
 				<div class="row d-flex justify-content-center">
@@ -69,16 +77,18 @@
 					</div>
 				</div>
 
-
-				<hr>
-
 				<div class="row mt-4">
-					<div class="col d-flex justify-content-start">
-						<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
-					</div>
+
 					<div class="col d-flex justify-content-end">
 						{{ form_row(form_user.submit) }}
 					</div>
+					<div class="col d-flex justify-content-center">
+						<a href="{{ path('app_login') }}" class="btn btn-outline-primary">Déjà un compte ? Se connecter</a>
+					</div>
+					<div class="col d-flex justify-content-start">
+						<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+					</div>			
+
 				</div>
 
 				{{ form_end(form_user) }}

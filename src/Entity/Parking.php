@@ -65,15 +65,9 @@ class Parking
      */
     private $operator;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Pricelist::class, mappedBy="parking_price")
-     */
-    private $pricelists;
-
     public function __construct()
     {
         $this->carparks = new ArrayCollection();
-        $this->pricelists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,33 +197,6 @@ class Parking
     public function setOperator(?Operator $operator): self
     {
         $this->operator = $operator;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Pricelist[]
-     */
-    public function getPricelists(): Collection
-    {
-        return $this->pricelists;
-    }
-
-    public function addPricelist(Pricelist $pricelist): self
-    {
-        if (!$this->pricelists->contains($pricelist)) {
-            $this->pricelists[] = $pricelist;
-            $pricelist->addParkingPrice($this);
-        }
-
-        return $this;
-    }
-
-    public function removePricelist(Pricelist $pricelist): self
-    {
-        if ($this->pricelists->removeElement($pricelist)) {
-            $pricelist->removeParkingPrice($this);
-        }
 
         return $this;
     }

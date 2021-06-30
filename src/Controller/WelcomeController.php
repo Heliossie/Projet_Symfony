@@ -51,7 +51,7 @@ class WelcomeController extends AbstractController
             $count= $adminRepository->findBy(['username' => $username]);
             if ($count) {
                 $this->addFlash('error',"L'identifiant saisi existe déjà, vous devez en choisir un autre.");
-                return $this->redirectToRoute('new_user');
+                return $this->redirectToRoute('user_new');
             }
             $pwd = $form->get('password')->getdata();
             $user->setUsername($username);

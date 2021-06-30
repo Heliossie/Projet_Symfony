@@ -21,7 +21,7 @@ class ClientFormType extends AbstractType
             ->add('name',TextType::class,['label' => 'Nom'])
             ->add('surname',TextType::class,['label' => 'Prénom'])
             ->add('adress',TextType::class,['label' => 'Adresse'])
-            ->add('zip_code',TextType::class,['label' => 'Code postale'])
+            ->add('zip_code',TextType::class,['label' => 'Code postal'])
             ->add('city',TextType::class,['label' => 'Ville'])
             ->add('state',TextType::class,['label' => 'Pays'])
             ->add('phone',TelType::class,['label' =>'Téléphone'])
@@ -34,7 +34,7 @@ class ClientFormType extends AbstractType
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmez le mot de passe'],
                 'mapped' => false],)
-            ->add('submit', SubmitType::class,['label' =>"S'inscrire"])
+            ->add('submit', SubmitType::class,['label' =>"S'inscrire", "attr" => ['class' => 'btn btn-primary']])
 
         ;
     }

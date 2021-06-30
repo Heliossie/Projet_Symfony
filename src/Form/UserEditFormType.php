@@ -35,7 +35,7 @@ class UserEditFormType extends AbstractType
             'second_options' => ['label' => 'Confirmez le mot de passe'],
         ])
 
-        ->add('Modifier', SubmitType::class)
+        ->add('edit', SubmitType::class, ['label' => 'Confimer la modification'])
         ;
     }
 

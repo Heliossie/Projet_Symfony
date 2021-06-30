@@ -7,17 +7,6 @@
 	<div class="container p-5">
 		<div class="card shadow-lg">
 			<form method="post">
-				{% if error %}
-					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-				{% endif %}
-
-				{% if app.user %}
-					<div class="mb-3">
-						Vous êtes connecté en tant que
-						{{ app.user.username }},
-						<a href="{{ path('app_logout') }}">Logout</a>
-					</div>
-				{% endif %}
 				<div class="card-header p-4">
 
 					<h1 class="h3 card-title font-weight-bold text-primary">Veuillez vous connecter :
@@ -25,7 +14,21 @@
 				</div>
 				<div class="card-body p-4">
 					<div class="row d-flex justify-content-center">
+
 						<div class="col-6">
+
+							{% if error %}
+								<div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
+
+							{% if app.user %}
+								<div class="alert alert-warning" role="alert">
+									Vous êtes connecté en tant que
+									{{ app.user.username }},
+									<a href="{{ path('app_logout') }}">Se déconnecter</a>
+								</div>
+							{% endif %}
+
 							<label for="inputUsername">Identifiant</label>
 							<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control mb-2" autocomplete="username" required autofocus>
 						</div>
@@ -40,23 +43,28 @@
 							type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 							{# Uncomment this section and add a remember_me option below your firewall to activate remember me functionality. See https://symfony.com/doc/current/security/remember_me.html
-																																									
-																																															<div class="checkbox mb-3">
-																																																<label>
-																																																	<input type="checkbox" name="_remember_me">
-																																																	Remember me
-																																																</label>
-																																															</div> #}
+							
+														<div class="checkbox mb-3">
+															<label>
+																<input type="checkbox" name="_remember_me">
+																Remember me
+															</label>
+														</div> #}
 
 							<div class="row mt-4">
-								<div class="col d-flex justify-content-start">
-									<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
-								</div>
+
 								<div class="col d-flex justify-content-end">
 									<button class="btn btn-primary" type="submit">
 										S'identifier
 									</button>
 								</div>
+								<div class="col d-flex justify-content-center">
+									<a href="{{ path('user_new') }}" class="btn btn-outline-primary">S'inscrire</a>
+								</div>
+								<div class="col d-flex justify-content-start">
+									<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+								</div>
+
 							</div>
 
 						</div>
