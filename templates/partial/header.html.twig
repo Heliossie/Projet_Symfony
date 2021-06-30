@@ -30,6 +30,8 @@
 				<div class="dropdown">
 					<img src="/images/user_connect.png" class="nav-user mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="">
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<p class="dropdown-header">{{ app.user.username }}</p>
+						<div class="dropdown-divider"></div>
 						{% if app.user.roles[0] == "ROLE_ADMIN" %}
 							<a class="dropdown-item active" href="{{ path('admin') }}">Dashboard Admin</a>
 						{% endif %}
