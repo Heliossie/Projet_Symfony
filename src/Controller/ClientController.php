@@ -62,10 +62,17 @@ class ClientController extends AbstractController
      */
     public function currentInvoice($id,CarparkRepository $carparkRepository): Response
     {
+        // récupération des objets
         $user = $this->getUser();
         $carpark = $carparkRepository->findOneBy(['id' => $id]);
+        // calcul de la durée de stationnement
+        $arrival_date = $carpark->getArrival();
         $departure_date = new \DateTime();
         $carpark->setDeparture($departure_date);
+        $duration = date_diff($arrival_date, $departure_date);
+        $duration->format('H:i:s');
+        var_dump($duration);
+        // récupération du prix en fonction de la durée
 
         // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
         // On détermine si le client a déjà stationné dans le mois en cours
@@ -84,7 +91,7 @@ class ClientController extends AbstractController
             $year = $departure_date->format('Y');
             $month = $departure_date->format('n');
             $date_invoice = date('Y-m-d',mktime(0,0,0,$month+1,1,$year));
-            $invoice->setDate($date_invoice);
+            // $invoice->setDate($date_invoice);
             $invoice->setAmount(0);
         }
         
