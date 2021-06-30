@@ -13,3 +13,5 @@ import bsCustomFileInput from 'bs-custom-file-input';
 // start the Stimulus application
 import './bootstrap';
 bsCustomFileInput.init();
+require('@fortawesome/fontawesome-free/css/all.min.css');
+require('@fortawesome/fontawesome-free/js/all.js');
