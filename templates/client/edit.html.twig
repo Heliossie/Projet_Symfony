@@ -1,51 +1,110 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification du compte client 
+{% block title %}Modification du compte client
 {% endblock %}
 
 {% block body %}
-<h1>{{ user.client.name }}</h1>
- {{ form_start(form_client) }}
-                    <div class="my-custom-class-for-errors">
-                        {{ form_errors(form_client) }}
-                    </div>
+	<div class="container p-5">
 
-                    <div class="row">
-                        <div class="col-4">
-                            {{ form_row(form_client.name, { 'value': user.client.name }) }}
-                        </div>
-                        <div class="col-4">
-                            {{ form_row(form_client.surname, { 'value': user.client.surname }) }}
-                        </div>
-                        <div class="col">
-                            {{ form_row(form_client.adress, { 'value': user.client.adress }) }}
-                        </div>
-                        <div class="col-4">
-                            {{ form_row(form_client.zip_code, { 'value': user.client.zipcode }) }}
-                        </div>
-                        <div class="col-4">
-                            {{ form_row(form_client.city, { 'value': user.client.city }) }}
-                        </div>
-                        <div class="col-4">
-                            {{ form_row(form_client.state, { 'value': user.client.state }) }}
-                        </div>
-                        <div class="col-4">
-                            {{ form_row(form_client.phone, { 'value': user.client.phone }) }}
-                        </div>
-                        <div class="col">
-                            {{ form_row(form_client.email,{ 'value': user.client.email }) }}
-                        </div>
-                    </div>
-                    <div class="row d-flex justify-content-center">
-                        <div class="col mt-4 d-flex justify-content-between">
-                            {{ form_row(form_client.edit) }}
-                        </div>
-                    </div>
-                </div>
-                {{ form_end(form_client) }}
+		<div class="card shadow-lg">
 
-                <div class="card-body">
-                    <h2>{{ user.username }}</h2>
-                    {{form(form_user)}}
-                </div>
+			<div class="card-header p-4">
+				<h1 class="h3 card-title font-weight-bold text-primary">
+					Modification du compte client :
+				</h1>
+				<p class="text-muted">
+					<span class="asterisk">*</span>
+					: obligatoire</p>
+
+			</div>
+			<div class="card-body p-4">
+				{{ form_start(form_client) }}
+				<div class="my-custom-class-for-errors">
+					{{ form_errors(form_client) }}
+				</div>
+
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_client.name, { 'value': user.client.name }) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_client.surname, { 'value': user.client.surname }) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-8">
+						{{ form_row(form_client.adress, { 'value': user.client.adress }) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_client.zip_code, { 'value': user.client.zipcode }) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_client.city, { 'value': user.client.city }) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_client.state, { 'value': user.client.state }) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_client.phone, { 'value': user.client.phone }) }}
+					</div>
+					<div class="col-8">
+						{{ form_row(form_client.email,{ 'value': user.client.email }) }}
+					</div>
+				</div>
+
+				<div class="row mt-4">
+
+					<div class="col d-flex justify-content-end">
+						{{ form_row(form_client.edit) }}
+					</div>
+					<div class="col d-flex justify-content-start">
+						<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+					</div>
+
+				</div>
+
+				{{ form_end(form_client) }}
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="card shadow-lg">
+
+			<div class="card-header p-4">
+				<h1 class="h3 card-title font-weight-bold text-primary">
+					Modification du mot de passe :
+				</h1>
+				<p class="text-muted">
+					<span class="asterisk">*</span>
+					: obligatoire</p>
+
+			</div>
+			<div class="card-body p-4">
+
+				{{ form_start(form_user) }}
+
+				<div class="row d-flex justify-content-center">
+					<div class="col-6">
+						{{ form_row(form_user.password) }}
+					</div>
+					<div class="row mt-4">
+						<div class="col-6 d-flex justify-content-end">
+							{{ form_row(form_user.edit) }}
+						</div>
+						<div class="col d-flex justify-content-start">
+							<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+						</div>
+					</div>
+					{{ form_end(form_user) }}
+
+				</div>
+			</div>
+
+		</div>
+	</div>
 {% endblock %}
