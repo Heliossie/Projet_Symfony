@@ -34,7 +34,9 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<p class="dropdown-header">Connecté à
-							<b><i>{{ app.user.username }}</i></b>
+							<b>
+								<i>{{ app.user.username }}</i>
+							</b>
 						</p>
 						<div class="dropdown-divider"></div>
 						{% if app.user.roles[0] == "ROLE_ADMIN" %}
@@ -64,8 +66,10 @@
 					<img src="/images/user.png" class="nav-user" alt="">
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
-					<a class="dropdown-item" href="{{ path('user_new') }}">S'inscrire</a>
+					<a class="dropdown-item" href="{{ path('app_login') }}">
+						<i class="fas fa-sign-in-alt fa-fw"></i>Se connecter</a>
+					<a class="dropdown-item" href="{{ path('user_new') }}">
+						<i class="fas fa-user-plus fa-fw"></i>S'abonner</a>
 				</div>
 			</div>
 		{% endif %}
