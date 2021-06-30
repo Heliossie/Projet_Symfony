@@ -13,9 +13,11 @@ L.tileLayer(
 ).addTo(mymap);
 
 /**
- * 
+ * L.geoJson( data, <GeoJSON options> options? ) Permet  de créer une couche GeoJSON
+ * Premier paramètre data prend le format geojson de l'open-data, pour chaque objet du JSON une entité est créer (marqueurs)
+ * en option la fonction onEachFeature qui permet d'ajouter une couche sur chaque entité créer et permet ainsi l'affichage des popups
  */
-let parkingMap = L.geoJSON(
+L.geoJSON(
   [
     {
       type: "FeatureCollection",
@@ -627,7 +629,7 @@ let parkingMap = L.geoJSON(
           type: "Feature",
           properties: {
             id: "34172_HDV",
-            nom: "HÃ´tel de ville",
+            nom: "Hôtel de ville",
             insee: 34172,
             adresse: "avenue Germaine Tillion",
             url: null,
