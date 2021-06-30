@@ -32,3 +32,12 @@ h5,
 h6 {
   font-family: "Poppins";
 }
+
+label.required:before {
+  content: "*";
+  color: $primary;
+}
+
+.asterisk {
+  color: $primary;
+}
