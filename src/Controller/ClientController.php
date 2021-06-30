@@ -43,7 +43,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/user/invoice/{id}", name="user_invoice")
+     * @Route("/user/invoice", name="user_invoice")
      */
     public function invoice(CarparkRepository $carparkRepository): Response
     {
