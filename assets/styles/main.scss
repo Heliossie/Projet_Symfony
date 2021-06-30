@@ -1,5 +1,32 @@
 $margin-nav-links: 20px;
 
+* {
+  font-family: "Roboto";
+}
+
+body {
+  background-color: #f1f1f1f1;
+  margin-top: 82px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins";
+}
+
+label.required:before {
+  content: "*";
+  color: $primary;
+}
+
+.asterisk {
+  color: $primary;
+}
+
 nav {
   .nav-logo {
     width: 52px;

@@ -4,30 +4,122 @@
 {% endblock %}
 
 {% block body %}
+	<div class="container p-5">
+		<div
+			class="row">
 
-	<div class="container">
-		<div class="card">
+			{# Col infos client #}
+			<div class="col-4">
 
-			<h1>Hello
-				{{ controller_name }}! ✅</h1>
-			<h2>User :
-				{{ user.client.id }}
-			</h2>
-			<a href="{{ path('user_invoice') }}">Voir mes factures</a>
-			<ul>
-				<li>{{ user.username }}</li>
-				<li>{{ user.password }}</li>
+				<div class="card shadow-lg">
+
+					<div class="card-header p-4">
+						<h1 class="h4 card-title font-weight-bold text-primary">
+							Espace Client
+						</h1>
+					</div>
+
+					<div class="card-body p-4">
+						<div class="row d-flex justify-content-center mb-4">
+							<img src="/images/user_connect.png" class="user-avatar" alt="">
+						</div>
+
+						<h2 class="h5 text-center">Bienvenue
+							{{ user.username }}
+							!</h2>
+
+						<hr>
+
+						<ul class="list-group list-group-flush text-center">
+							<li class="list-group-item">Nom :
+								{{ user.client.name }}</li>
+							<li class="list-group-item">Prénom :
+								{{ user.client.surname }}</li>
+							<li class="list-group-item">Email :
+								{{ user.client.email }}</li>
+							<li class="list-group-item">Télephone :
+								{{ user.client.phone }}</li>
+							<li class="list-group-item">
+								<a href="{{ path('user_edit') }}" class="btn btn-outline-primary">Modifier mon compte</a>
+							</li>
+
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+
+			{# Col infos facture/stationnement #}
+			<div class="col-8">
+
+				<div class="card shadow-lg">
+
+					<div class="card-header p-4">
+						<h2 class="h4 card-title font-weight-bold text-primary">
+							Stationnement en cours
+						</h2>
+					</div>
+
+					<div class="card-body">
+						<div class="container">
+							<div class="card shadow-sm">
+
+								<table class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<th scope="col">Parking</th>
+											<th scope="col">Date d'arrivée</th>
+											<th scope="col">Prix actuel</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										{# {% for carpark in carparks %} #}
+										<tr>
+											<th scope="row">Oddyseum</th>
+											<td>18/06/2021, 18h34</td>
+											<td>24,32€</td>
+										</tr>
+										{# {% endfor %} #}
+
+										<tr>
+											<th scope="row">Arc de Tiomphe</th>
+											<td>18/06/2021, 18h34</td>
+											<td>14,07€</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
 				<hr>
-				<li>{{ user.client.name }}</li>
-				<li>{{ user.client.surname }}</li>
-				<li>{{ user.client.adress }}</li>
-				<li>{{ user.client.zipcode }}</li>
-				<li>{{ user.client.city }}</li>
-				<li>{{ user.client.state }}</li>
-				<li>{{ user.client.phone }}</li>
-				<li>{{ user.client.email }}</li>
 
-			</ul>
+				<div class="card shadow-lg">
+
+					<div class="card-header p-4">
+						<h2 class="h4 card-title font-weight-bold text-primary">
+							Factures
+						</h2>
+					</div>
+					<div
+						class="card-body">
+						{# {% for carpark in carparks %} #}
+						<div class="container">
+							<p>Total du mois en cours : 24,06€</p>
+							<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
+						</div>
+						{# {% endfor %} #}
+					</div>
+
+				</div>
+
+			</div>
 		</div>
 	</div>
 {% endblock %}

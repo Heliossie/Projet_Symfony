@@ -5,6 +5,7 @@ $light: #f5f5f5;
 @import "~bootstrap/scss/bootstrap";
 @import "./main";
 @import "./welcome";
+@import "./user";
 
 @font-face {
   font-family: "Poppins";
@@ -13,31 +14,4 @@ $light: #f5f5f5;
 @font-face {
   font-family: "Roboto";
   src: url("/public/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
-}
-
-* {
-  font-family: "Roboto";
-}
-
-body {
-  background-color: #f1f1f1f1;
-  margin-top: 82px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Poppins";
-}
-
-label.required:before {
-  content: "*";
-  color: $primary;
-}
-
-.asterisk {
-  color: $primary;
 }
