@@ -28,29 +28,46 @@
 			</ul>
 			{% if app.user %}
 				<div class="dropdown">
-					<img src="/images/user_connect.png" class="nav-user mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="">
+					<a class="d-flex justify-content-center align-items-end mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="/images/user_connect.png" class="nav-user" alt="">
+						<i class="fas fa-caret-down fa-dropdown fa-lg"></i>
+					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<p class="dropdown-header">{{ app.user.username }}</p>
+						<p class="dropdown-header">Connecté à
+							<i>{{ app.user.username }}</i>
+						</p>
 						<div class="dropdown-divider"></div>
 						{% if app.user.roles[0] == "ROLE_ADMIN" %}
-							<a class="dropdown-item active" href="{{ path('admin') }}">Dashboard Admin</a>
+							<a class="dropdown-item active" href="{{ path('admin') }}">
+								<i class="fas fa-tachometer-alt"></i>
+								Dashboard Admin</a>
 						{% endif %}
-						<a class="dropdown-item" href="{{ path('user') }}">Espace Client</a>
-						<a class="dropdown-item" href="{{ path('user_invoice') }}">Voir mes factures</a>
-						<a class="dropdown-item" href="{{ path('user_edit') }}">Modifier mon compte</a>
-						<a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
-					</div>
+						<a class="dropdown-item" href="{{ path('user') }}">
+							<i class="fas fa-user fa-fw"></i>
+							Espace Client</a>
+						<a class="dropdown-item" href="{{ path('user_invoice') }}">
+							<i class="fas fa-file-invoice fa-fw"></i>
+						</i>
+						Voir mes factures</a>
+					<a class="dropdown-item" href="{{ path('user_edit') }}">
+						<i class="fas fa-user-cog fa-fw"></i>
+						Modifier mon compte</a>
+					<a class="dropdown-item" href="{{ path('app_logout') }}">
+						<i class="fas fa-sign-out-alt fa-fw"></i>
+						Se déconnecter</a>
 				</div>
-			{% else %}
-				<div class="dropdown">
-					<img src="/images/user.png" class="nav-user mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="">
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
-						<a class="dropdown-item" href="{{ path('user_new') }}">S'inscrire</a>
-					</div>
+			</div>
+		{% else %}
+			<div class="dropdown">
+				<a class="d-flex justify-content-center align-items-end mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-caret-down fa-dropdown fa-lg"></i>
+					<img src="/images/user.png" class="nav-user" alt="">
+				</a>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
+					<a class="dropdown-item" href="{{ path('user_new') }}">S'inscrire</a>
 				</div>
-			{% endif %}
-		</div>
-	</nav>
-
-</header>
+			</div>
+		{% endif %}
+	</div>
+</nav></header>
