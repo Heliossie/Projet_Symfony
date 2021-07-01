@@ -34,7 +34,7 @@ class ClientFormType extends AbstractType
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmez le mot de passe'],
                 'mapped' => false],)
-            ->add('submit', SubmitType::class,['label' =>"S'inscrire", "attr" => ['class' => 'btn btn-primary']])
+            ->add('submit', SubmitType::class,['label' =>"S'abonner", "attr" => ['class' => 'btn btn-primary']])
 
         ;
     }

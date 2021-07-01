@@ -27,27 +27,44 @@ label.required:before {
   color: $primary;
 }
 
-nav {
-  .nav-logo {
-    width: 52px;
-  }
+.fas {
+  width: 16px !important;
+  height: 16px !important;
+  margin-right: 12px;
+  color: $dark;
+}
 
-  .nav-title {
-    font-size: 1.8rem;
-  }
+header {
+  nav {
+    .nav-logo {
+      width: 52px;
+    }
 
-  .nav-user {
-    width: 52px;
-  }
+    .nav-title {
+      font-size: 1.8rem;
+    }
 
-  .nav-link {
-    margin-left: $margin-nav-links;
-    margin-right: $margin-nav-links;
-  }
+    .nav-user {
+      width: 52px;
+    }
 
-  .dropdown-menu {
-    position: absolute;
-    right: 32px;
+    .nav-link {
+      margin-left: $margin-nav-links;
+      margin-right: $margin-nav-links;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 42px;
+      top: 53.9px;
+    }
+
+    .fa-dropdown {
+      color: $light;
+      position: absolute;
+      right: 28px;
+      bottom: -14px;
+    }
   }
 }
 
