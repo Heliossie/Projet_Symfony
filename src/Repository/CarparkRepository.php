@@ -22,19 +22,35 @@ class CarparkRepository extends ServiceEntityRepository
     // /**
     //  * @return Carpark[] Returns an array of Carpark objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function monthlyCarparks($month, $year, $id): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn= $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT * FROM carpark
+            WHERE MONTH(departure) = :month
+            AND YEAR(departure) = :year
+            AND client_id= :id
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->executeStatement(['month' => $month, 'year' => $year, 'id' => $id]);
+
+        return $stmt->fetchAllAssociative();
+
+        // return $this->createQueryBuilder('c')
+        //     ->where('MONTH(c.departure) = :month')
+        //     ->andWhere('YEAR(c.departure) = :year')
+        //     ->andWhere('c.client = :client')
+        //     ->setParameter('month', $month)
+        //     ->setParameter('year', $year)
+        //     ->setParameter('client', $client)
+        //     ->orderBy('c.id', 'ASC')
+        //     // ->setMaxResults(10)
+        //     ->getQuery()
+        //     ->getResult()
+        // ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Carpark

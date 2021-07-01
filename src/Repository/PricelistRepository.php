@@ -29,7 +29,7 @@ class PricelistRepository extends ServiceEntityRepository
             ->andWhere("p.duration <= :val")
             ->setParameter('val', $value)
             ->orderBy('p.price', 'DESC')
-            ->setMaxResults(10)
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult()
         ;

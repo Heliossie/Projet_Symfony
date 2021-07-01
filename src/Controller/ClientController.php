@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ParkingRepository;
 use App\Repository\PricelistRepository;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -65,7 +66,9 @@ class ClientController extends AbstractController
     {
         // récupération des objets
         $user = $this->getUser();
+        $client= $user->getClient();
         $carpark = $carparkRepository->findOneBy(['id' => $id]);
+
         // calcul de la durée de stationnement
         $arrival_date = $carpark->getArrival();
         $departure_date = new \DateTime();
@@ -73,19 +76,24 @@ class ClientController extends AbstractController
         $duration = $arrival_date->diff($departure_date);
         $duration = $duration->format('%H:%I:%S');
         
-
         // récupération du prix en fonction de la durée
-
         $query=$pricelistRepository->findByPrice($duration);
         $price=$query[0]->getPrice();
 
         // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
         // On détermine si le client a déjà stationné dans le mois en cours
         
-        // $current_month = $departure_date->format('n');
-        // $current_year = $departure_date->format('Y');
+        $current_month = $departure_date->format('n');
+        $current_year = $departure_date->format('Y');
+        $id_client = $client->getId();
         // $current_carparks= $carparkRepository->findBy(['MONTH(departure)' => $current_month,'YEAR(departure)'=>$current_year,'client' => $user->getClient()]);
+        $current_carparks= $carparkRepository->monthlyCarparks($current_month, $current_year, $id_client);
         
+        echo '<pre>';
+        var_dump($current_carparks);
+        echo '</pre>';
+        die;
+
         // if ($current_carparks) 
         // {
         //     $invoice = $current_carparks[0]->getInvoice();
@@ -120,12 +128,17 @@ class ClientController extends AbstractController
      */
     public function parking(CarparkRepository $carparkRepository, ParkingRepository $parkingRepository): Response
     {
-        $user = $this->security->getUser();
+        // récupération des objets
+        $user = $this->getUser();
+        $client = $user->getClient();
+        // on vérifie que pour l'user connecté, s'il a déjà un stationnement en cours
+        $carparks = $carparkRepository->findOneBy(['client' => $client, 'departure'=>null]);
+    
 
         return $this->render('parking/carpark.html.twig', [
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
-            'carparks' => $carparkRepository->findBy(['client' => $user->getUserIdentifier()]),
+            'carparks' => $carparks,
             'parkings' => $parkingRepository->findAll(),
         ]);
     }
@@ -136,9 +149,11 @@ class ClientController extends AbstractController
      */
     public function carpark($id, ParkingRepository $parkingRepository, EntityManagerInterface $em): Response
     {
+        // récupération des objets
         $user = $this->getUser();
         $client = $user->getClient();
         $parking = $parkingRepository->findOneBy(['id' => $id]);
+        // création du stationnement dans le parking sélectionné
         $carpark = new Carpark;
         $arrival_date = new \DateTime();
         $carpark->setArrival($arrival_date);
@@ -148,7 +163,6 @@ class ClientController extends AbstractController
         $em->flush();
 
         
-
         return $this->render('parking/carpark.html.twig', [
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
