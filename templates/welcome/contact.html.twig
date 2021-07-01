@@ -16,10 +16,15 @@
 				<p class="text-muted">
 					<span class="asterisk">*</span>
 					: obligatoire</p>
-
+				{% for success in app.flashes('success') %}
+					<div class="alert alert-success" role="alert">
+						{{ success }}
+					</div>
+				{% endfor %}
 			</div>
 			<div class="card-body p-4">
 				{{ form_start(form_contact) }}
+
 				<div class="row">
 					<div class="col">
 						{{ form_row(form_contact.name) }}

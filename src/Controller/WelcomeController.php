@@ -36,11 +36,14 @@ class WelcomeController extends AbstractController
     {   
         $form_contact = $this->createForm(ContactFormType::class);
 
-        //$form_contact->handleRequest($request);
+        $form_contact->handleRequest($request);
 
         if ($form_contact->isSubmitted() && $form_contact->isValid()) {
 
             $contactFormData = $form_contact->getData();
+            $this->addFlash('success', "Merci, votre message a été envoyé.");
+
+            return $this->redirectToRoute('contact');
 
             // Pour rajouter l'envoi de mails
             /*
@@ -56,6 +59,7 @@ class WelcomeController extends AbstractController
 
             return $this->render('welcome/contact.html.twig');
             */
+            
         }
         return $this->render('welcome/contact.html.twig', [
             'controller_name' => 'WelcomeController - Contact',
