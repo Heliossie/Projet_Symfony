@@ -5,48 +5,56 @@
 
 {% block body %}
 
-	<div class="container">
 
-		<h1>Contact</h1>
-		<div class="container p-5">
-			<div class="card shadow-lg">
-				<div class="card-body p-4">
-					{{ form_start(form_contact) }}
-					<div class="row">
-						<div class="col">
-							{{ form_row(form_contact.name) }}
-						</div>
-						<div class="col">
-							{{ form_row(form_contact.surname) }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							{{ form_row(form_contact.email) }}
-						</div>
-						<div class="col">
-							{{ form_row(form_contact.phone) }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							{{ form_row(form_contact.message) }}
-						</div>
-					</div>
-					<div class="row mt-4 text-nowrap">
+	<div class="container p-5">
+		<div class="card shadow-lg">
 
-						<div class="col d-flex justify-content-end">
-							{{ form_row(form_contact.submit) }}
-						</div>
+			<div class="card-header p-4">
+				<h1 class="h3 card-title font-weight-bold text-primary">
+					Formulaire de contact :
+				</h1>
+				<p class="text-muted">
+					<span class="asterisk">*</span>
+					: obligatoire</p>
 
-						<div class="col d-flex justify-content-start">
-							<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
-						</div>
-
+			</div>
+			<div class="card-body p-4">
+				{{ form_start(form_contact) }}
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_contact.name) }}
 					</div>
-					{{ form_end(form_contact) }}
+					<div class="col">
+						{{ form_row(form_contact.surname) }}
+					</div>
 				</div>
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_contact.email) }}
+					</div>
+					<div class="col">
+						{{ form_row(form_contact.phone) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						{{ form_row(form_contact.message) }}
+					</div>
+				</div>
+				<div class="row mt-4 text-nowrap">
+
+					<div class="col d-flex justify-content-end">
+						{{ form_row(form_contact.submit) }}
+					</div>
+
+					<div class="col d-flex justify-content-start">
+						<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+					</div>
+
+				</div>
+				{{ form_end(form_contact) }}
 			</div>
 		</div>
+	</div>
 
-	{% endblock %}
+</div>{% endblock %}
