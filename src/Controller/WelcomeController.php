@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Admin;
 use App\Entity\Client;
 use App\Form\ClientFormType;
+use App\Form\ContactFormType;
+// use Symfony\Component\Mime\Email;
 use App\Repository\AdminRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+// use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,10 +31,34 @@ class WelcomeController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(): Response
-    {
+    public function contact(Request $request): Response
+    {   
+        $form_contact = $this->createForm(ContactFormType::class);
+
+        //$form_contact->handleRequest($request);
+
+        if ($form_contact->isSubmitted() && $form_contact->isValid()) {
+
+            $contactFormData = $form_contact->getData();
+
+            // Pour rajouter l'envoi de mails
+            /*
+            $message = (new Email())
+            ->from($contactFormData['email'])
+            ->to('parkit@mailinator.com')
+            ->subject('You\'ve got mail!')
+            ->text(
+                $contactFormData['message']
+            );
+
+            $mailer->send($message);
+
+            return $this->render('welcome/contact.html.twig');
+            */
+        }
         return $this->render('welcome/contact.html.twig', [
             'controller_name' => 'WelcomeController - Contact',
+            'form_contact' => $form_contact->createView(),
         ]);
     }
 
