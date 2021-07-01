@@ -1,13 +1,90 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Parkit - Tarifs{% endblock %}
+{% block title %}Parkit - Tarifs
+{% endblock %}
 
 {% block body %}
+	<div class="container p-5">
+		<div
+			class="row">
 
-<div class="container">
+			{# Col infos abonnement #}
+			<div
+				class="col-lg-8 col-sm-12 mb-4">
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    
-</div>
+				{# Card Espace client #}
+				<div class="card shadow-lg">
+
+					<div class="card-header p-4">
+						<h1 class="h4 card-title font-weight-bold text-primary">
+							L'abonnement Park-It
+						</h1>
+					</div>
+
+					<div class="card-body p-4">
+						<h2 class="h4">Un tarif unique pour toute la ville !</h2>
+
+						<br>
+						<p>Economisez et profitez d’un tarif unique sur toute la ville plus un paiement simplifié et automatisé.
+							<br><br>
+							Lorem ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, eos. Lorem, ipsum dolor.
+							<br><br>
+							Lorem ipsum dolor sit amet consectetur adipisicing. Lorem, ipsum dolor. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit. Ullam, eos.
+							<br><br>
+							Lorem ipsum dolor sit amet consectetur adipisicing. Lorem, ipsum dolor. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit. Ullam, eos.
+							<br><br>
+							Lorem ipsum dolor sit amet consectetur adipisicing. Lorem, ipsum dolor. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit. Ullam, eos.
+							<br><br>
+							Lorem ipsum dolor sit amet consectetur adipisicing. Lorem, ipsum dolor. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit. Ullam, eos.
+						</p>
+					</div>
+
+				</div>
+
+			</div>
+
+			{# Col infos tarifs #}
+			<div class="col-lg-4 col-sm-12 mb-4">
+
+				<div class="card shadow-lg mb-4">
+
+					<div class="card-header p-4">
+						<h2 class="h4 card-title font-weight-bold text-primary">
+							Tarifs parking
+						</h2>
+					</div>
+
+					<div class="card-body">
+						<div class="container">
+							<div class="card shadow-sm">
+
+								<table class="table table-striped table-hover table-sm m-0">
+									<thead>
+										<tr>
+											<th scope="col">Durée</th>
+											<th scope="col">Prix</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										{% for tarif in tarifs %}
+											<tr>
+												<th scope="row">{{ tarif.duration|date('H:i:s') }}</th>
+												<td>{{ tarif.price|number_format(2) }}€</td>
+											</tr>
+										{% endfor %}
+
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Admin;
 use App\Entity\Client;
 use App\Form\ClientFormType;
 use App\Repository\AdminRepository;
+use App\Repository\PricelistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,10 +98,11 @@ class WelcomeController extends AbstractController
     /**
      * @Route("/tarif", name="tarif")
      */
-    public function tarif(): Response
+    public function tarif(PricelistRepository $pricelistRepository): Response
     {
         return $this->render('welcome/tarif.html.twig', [
             'controller_name' => 'WelcomeController - Tarif',
+            'tarifs' => $pricelistRepository->findAll(),
         ]);
     }
 }
