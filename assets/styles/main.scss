@@ -54,16 +54,15 @@ header {
     }
 
     .dropdown-menu {
-      position: absolute;
+      position: absolute !important;
       right: 42px;
-      top: 53.9px;
     }
 
     .fa-dropdown {
       color: $light;
       position: absolute;
       right: 28px;
-      bottom: -14px;
+      bottom: -14.8px;
     }
   }
 }

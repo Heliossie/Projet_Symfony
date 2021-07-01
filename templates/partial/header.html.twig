@@ -7,7 +7,7 @@
 			<h1 class="nav-title">Park-It</h1>
 		</a>
 
-		<button class="navbar-toggler mx-5" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -26,13 +26,14 @@
 					<a class="nav-link text-white" href="{{ path('parking') }}">Parking</a>
 				</li>
 			</ul>
+			{# User connecté #}
 			{% if app.user %}
 				<div class="dropdown">
-					<a class="d-flex justify-content-center align-items-end mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="d-flex justify-content-end align-items-center mx-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 						<img src="/images/user_connect.png" class="nav-user" alt="">
 						<i class="fas fa-caret-down fa-dropdown fa-lg"></i>
 					</a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1">
 						<p class="dropdown-header">Connecté à
 							<b>
 								<i>{{ app.user.username }}</i>
@@ -58,20 +59,21 @@
 						<i class="fas fa-sign-out-alt fa-fw"></i>
 						Se déconnecter</a>
 				</div>
-			</div>
-		{% else %}
-			<div class="dropdown">
-				<a class="d-flex justify-content-center align-items-end mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fas fa-caret-down fa-dropdown fa-lg"></i>
-					<img src="/images/user.png" class="nav-user" alt="">
-				</a>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{{ path('app_login') }}">
-						<i class="fas fa-sign-in-alt fa-fw"></i>Se connecter</a>
-					<a class="dropdown-item" href="{{ path('user_new') }}">
-						<i class="fas fa-user-plus fa-fw"></i>S'abonner</a>
+				{# User non connecté #}
+			{% else %}
+				<div class="dropdown">
+					<a class="d-flex justify-content-end align-items-center mx-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-caret-down fa-dropdown fa-lg"></i>
+						<img src="/images/user.png" class="nav-user" alt="">
+					</a>
+					<div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="{{ path('app_login') }}">
+							<i class="fas fa-sign-in-alt fa-fw"></i>Se connecter</a>
+						<a class="dropdown-item" href="{{ path('user_new') }}">
+							<i class="fas fa-user-plus fa-fw"></i>S'abonner</a>
+					</div>
 				</div>
-			</div>
-		{% endif %}
-	</div>
-</nav></header>
+			{% endif %}
+		</div>
+	</nav>
+</header>
