@@ -43,7 +43,7 @@ class WelcomeController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('welcome');
         }
-        
+
         $client = new Client();
         $user = new Admin;
         $form = $this->createForm(ClientFormType::class, $client);
@@ -51,7 +51,7 @@ class WelcomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $username = $form->get('identifiant')->getData();
             // on vérifie si le username n'existe pas déjà dans la table admin
-            $count= $adminRepository->findBy(['username' => $username]);
+            $count = $adminRepository->findBy(['username' => $username]);
             if ($count) {
                 $this->addFlash('error', "L'identifiant saisi existe déjà, vous devez en choisir un autre.");
                 return $this->redirectToRoute('user_new');
@@ -91,6 +91,16 @@ class WelcomeController extends AbstractController
     {
         return $this->render('welcome/conf.html.twig', [
             'controller_name' => 'WelcomeController - Termes',
+        ]);
+    }
+
+    /**
+     * @Route("/tarif", name="tarif")
+     */
+    public function tarif(): Response
+    {
+        return $this->render('welcome/tarif.html.twig', [
+            'controller_name' => 'WelcomeController - Tarif',
         ]);
     }
 }
