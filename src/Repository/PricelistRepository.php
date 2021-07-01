@@ -26,9 +26,9 @@ class PricelistRepository extends ServiceEntityRepository
     public function findByPrice($value)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere("p.duration <= :val")
+            ->andWhere("p.duration >= :val")
             ->setParameter('val', $value)
-            ->orderBy('p.price', 'DESC')
+            ->orderBy('p.price', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult()
