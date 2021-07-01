@@ -1,13 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello WelcomeController!{% endblock %}
+{% block title %}Hello WelcomeController!
+{% endblock %}
 
 {% block body %}
 
-<div class="container">
+	<div class="container">
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    
-</div>
+		<h1>Contact</h1>
+		<div class="container p-5">
+			<div class="card shadow-lg">
+				<div class="card-body p-4">
+					{{ form_start(form_contact) }}
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.name) }}
+						</div>
+						<div class="col">
+							{{ form_row(form_contact.surname) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.email) }}
+						</div>
+						<div class="col">
+							{{ form_row(form_contact.phone) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.message) }}
+						</div>
+					</div>
+					<div class="row mt-4 text-nowrap">
 
-{% endblock %}
+						<div class="col d-flex justify-content-end">
+							{{ form_row(form_contact.submit) }}
+						</div>
+
+						<div class="col d-flex justify-content-start">
+							<a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+						</div>
+
+					</div>
+					{{ form_end(form_contact) }}
+				</div>
+			</div>
+		</div>
+
+	{% endblock %}
