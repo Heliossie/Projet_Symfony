@@ -58,7 +58,7 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
         if ($roles[0] === "ROLE_ADMIN") {
             return new RedirectResponse($this->urlGenerator->generate('admin'));
         } else {
-            return new RedirectResponse($this->urlGenerator->generate('welcome'));
+            return new RedirectResponse($this->urlGenerator->generate('user'));
         }
 
         // For example:

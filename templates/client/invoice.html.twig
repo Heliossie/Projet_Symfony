@@ -1,20 +1,292 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello WelcomeController!{% endblock %}
+{% block title %}Parkit - Espace client - Factures
+{% endblock %}
 
 {% block body %}
+	<div class="container p-5">
 
-<div class="container">
+		<div class="card shadow-lg">
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <h2>User : {{ user.client.name }} </h2>
-    <p>Durée : {{ duration }}</p>
-    <p>Prix à payer : {{ price }}</p>
-    <h3>Factures :</h3>
-    {% for invoice in invoices %}
-    <p>{{ invoice }}</p>
-    {% endfor %}
-    
-</div>
+			<div class="card-header p-4">
+				<h1 class="h3 card-title font-weight-bold text-primary">
+					Mes factures :
+				</h1>
+			</div>
+			<div class="card-body p-4">
 
+				<div
+					class="accordion" id="invoiceAccordion">
+
+					{# 1er mois #}
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingOne">
+							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								Juillet 2021&nbsp;
+								<p class="text-muted">
+									(mois en cours)</p>
+							</button>
+
+						</h2>
+
+						<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#invoiceAccordion">
+							<div class="accordion-body">
+								<div class="container p-2">
+
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col">
+												<p class="text-muted">Date :
+												</p>
+												<p>18/02/2021</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Parking :
+												</p>
+												<p>Odysseum</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Durée du stationnement :
+												</p>
+												<p>06:42:25</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Prix :
+												</p>
+												<p>12,68€</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col">
+												<p class="text-muted">Date :
+												</p>
+												<p>18/02/2021</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Parking :
+												</p>
+												<p>Odysseum</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Durée du stationnement :
+												</p>
+												<p>06:42:25</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Prix :
+												</p>
+												<p>12,68€</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col-6">
+												<p class="text-muted">Id Facture :
+												</p>
+												<p>44ada8da-88c2-4252-85c4-91ac41173c5d</p>
+												<a href="" class="btn btn-outline-primary m-2">Télecharger la facture</a>
+											</div>
+											<div class="col-5 text-end">
+												<p class="text-muted">Montant total à payer :
+												</p>
+												<p>Stationnements : 26,82€</p>
+												<p>Abonnement : 6,00€</p>
+												<hr class="m-1">
+												<p>Total dû (TTC) : 32,86€</p>
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					{# 2e mois #}
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingTwo">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								Juin 2021 :
+							</button>
+						</h2>
+						<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#invoiceAccordion">
+							<div class="accordion-body">
+								<div class="container p-2">
+
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col">
+												<p class="text-muted">Date :
+												</p>
+												<p>18/02/2021</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Parking :
+												</p>
+												<p>Odysseum</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Durée du stationnement :
+												</p>
+												<p>06:42:25</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Prix :
+												</p>
+												<p>12,68€</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col">
+												<p class="text-muted">Date :
+												</p>
+												<p>18/02/2021</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Parking :
+												</p>
+												<p>Odysseum</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Durée du stationnement :
+												</p>
+												<p>06:42:25</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Prix :
+												</p>
+												<p>12,68€</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col-6">
+												<p class="text-muted">Id Facture :
+												</p>
+												<p>44ada8da-88c2-4252-85c4-91ac41173c5d</p>
+												<a href="" class="btn btn-outline-primary m-2">Télecharger la facture</a>
+											</div>
+											<div class="col-5 text-end">
+												<p class="text-muted">Montant total à payer :
+												</p>
+												<p>Stationnements : 26,82€</p>
+												<p>Abonnement : 6,00€</p>
+												<hr class="m-1">
+												<p>Total dû (TTC) : 32,86€</p>
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					{# 3e mois #}
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingThree">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+								Mai 2021 :
+							</button>
+						</h2>
+						<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#invoiceAccordion">
+							<div class="accordion-body">
+								<div class="container p-2">
+
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col">
+												<p class="text-muted">Date :
+												</p>
+												<p>18/02/2021</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Parking :
+												</p>
+												<p>Odysseum</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Durée du stationnement :
+												</p>
+												<p>06:42:25</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Prix :
+												</p>
+												<p>12,68€</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col">
+												<p class="text-muted">Date :
+												</p>
+												<p>18/02/2021</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Parking :
+												</p>
+												<p>Odysseum</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Durée du stationnement :
+												</p>
+												<p>06:42:25</p>
+											</div>
+											<div class="col">
+												<p class="text-muted">Prix :
+												</p>
+												<p>12,68€</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+										<div class="row text-center align-items-center">
+											<div class="col-6">
+												<p class="text-muted">Id Facture :
+												</p>
+												<p>44ada8da-88c2-4252-85c4-91ac41173c5d</p>
+												<a href="" class="btn btn-outline-primary m-2">Télecharger la facture</a>
+											</div>
+											<div class="col-5 text-end">
+												<p class="text-muted">Montant total à payer :
+												</p>
+												<p>Stationnements : 26,82€</p>
+												<p>Abonnement : 6,00€</p>
+												<hr class="m-1">
+												<p>Total dû (TTC) : 32,86€</p>
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

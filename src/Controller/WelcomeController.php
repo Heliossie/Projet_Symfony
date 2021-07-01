@@ -5,9 +5,13 @@ namespace App\Controller;
 use App\Entity\Admin;
 use App\Entity\Client;
 use App\Form\ClientFormType;
+use App\Form\ContactFormType;
+// use Symfony\Component\Mime\Email;
 use App\Repository\AdminRepository;
+use App\Repository\PricelistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+// use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,10 +32,38 @@ class WelcomeController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(): Response
-    {
+    public function contact(Request $request): Response
+    {   
+        $form_contact = $this->createForm(ContactFormType::class);
+
+        $form_contact->handleRequest($request);
+
+        if ($form_contact->isSubmitted() && $form_contact->isValid()) {
+
+            $contactFormData = $form_contact->getData();
+            $this->addFlash('success', "Merci, votre message a été envoyé.");
+
+            return $this->redirectToRoute('contact');
+
+            // Pour rajouter l'envoi de mails
+            /*
+            $message = (new Email())
+            ->from($contactFormData['email'])
+            ->to('parkit@mailinator.com')
+            ->subject('You\'ve got mail!')
+            ->text(
+                $contactFormData['message']
+            );
+
+            $mailer->send($message);
+
+            return $this->render('welcome/contact.html.twig');
+            */
+            
+        }
         return $this->render('welcome/contact.html.twig', [
             'controller_name' => 'WelcomeController - Contact',
+            'form_contact' => $form_contact->createView(),
         ]);
     }
 
@@ -43,7 +75,7 @@ class WelcomeController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('welcome');
         }
-        
+
         $client = new Client();
         $user = new Admin;
         $form = $this->createForm(ClientFormType::class, $client);
@@ -51,7 +83,7 @@ class WelcomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $username = $form->get('identifiant')->getData();
             // on vérifie si le username n'existe pas déjà dans la table admin
-            $count= $adminRepository->findBy(['username' => $username]);
+            $count = $adminRepository->findBy(['username' => $username]);
             if ($count) {
                 $this->addFlash('error', "L'identifiant saisi existe déjà, vous devez en choisir un autre.");
                 return $this->redirectToRoute('user_new');
@@ -91,6 +123,17 @@ class WelcomeController extends AbstractController
     {
         return $this->render('welcome/conf.html.twig', [
             'controller_name' => 'WelcomeController - Termes',
+        ]);
+    }
+
+    /**
+     * @Route("/tarif", name="tarif")
+     */
+    public function tarif(PricelistRepository $pricelistRepository): Response
+    {
+        return $this->render('welcome/tarif.html.twig', [
+            'controller_name' => 'WelcomeController - Tarif',
+            'tarifs' => $pricelistRepository->findAll(),
         ]);
     }
 }

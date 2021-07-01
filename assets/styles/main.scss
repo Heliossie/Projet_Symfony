@@ -54,16 +54,15 @@ header {
     }
 
     .dropdown-menu {
-      position: absolute;
+      position: absolute !important;
       right: 42px;
-      top: 53.9px;
     }
 
     .fa-dropdown {
       color: $light;
       position: absolute;
       right: 28px;
-      bottom: -14px;
+      bottom: -14.8px;
     }
   }
 }
@@ -81,31 +80,16 @@ footer {
   font-weight: 600;
   font-size: 22px;
   background-color: $primary;
-  box-shadow: -6px 6px 0px $secondary;
+  box-shadow: -4px 6px 0px $secondary;
   border-radius: 5px;
-
-  span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-
-  span:after {
-    content: "\00bb";
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-  }
-
-  .btn-custom:hover span {
-    padding-right: 25px;
-  }
-
-  .btn-custom:hover span:after {
-    opacity: 1;
-    right: 0;
-  }
+  text-decoration: none;
+  transition: ease-out 0.5s;
 }
+.btn-custom:hover {
+  background-color: $light;
+  transition: ease-in 0.4s;
+  box-shadow: 0px 0px 0px $primary;
+  border: 1px solid $secondary;
+  transform: translateY(4px);
+}
+
