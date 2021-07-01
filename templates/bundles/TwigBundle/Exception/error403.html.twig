@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Accès interdit
+{% endblock %}
+
+{% block body %}
+
+<div class="container p-4">
+    <div class="card shadow lg">
+        <div class="p-4">
+            <h1>Accès interdit</h1>
+            <p>Il semble que vous ête sortie de votre route !</p>
+            <p>Retournez donc sur la bonne <a href="{{ path('welcome') }}">route</a>.</p>
+            <p>Code de l'erreur : {{ status_code }} {{ status_text }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
