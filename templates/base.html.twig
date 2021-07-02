@@ -22,13 +22,12 @@
 		{% endblock %}
 	</head>
 	<body>
-
 		{% include './partial/header.html.twig' %}
 
-		<div id="body"> {% block body %}{% endblock %}
-			</div>
+		<main>
+			{% block body %}{% endblock %}
+		</main>
 
-			{% include './partial/footer.html.twig' %}
-
-		</body>
-	</html>
+		{% include './partial/footer.html.twig' %}
+	</body>
+</html>
