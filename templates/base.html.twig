@@ -25,9 +25,10 @@
 
 		{% include './partial/header.html.twig' %}
 
-		{% block body %}{% endblock %}
+		<div id="body"> {% block body %}{% endblock %}
+			</div>
 
-		{% include './partial/footer.html.twig' %}
+			{% include './partial/footer.html.twig' %}
 
-	</body>
-</html>
+		</body>
+	</html>

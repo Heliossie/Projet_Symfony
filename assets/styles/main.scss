@@ -7,6 +7,9 @@ $margin-nav-links: 20px;
 body {
   background-color: #f1f1f1f1;
   margin-top: 82px;
+  #body {
+    min-height: 60vh;
+  }
 }
 
 h1,
@@ -51,13 +54,18 @@ header {
     .nav-link {
       margin-left: $margin-nav-links;
       margin-right: $margin-nav-links;
-      transition:ease-in-out 1s;
+      color: $light !important;
+      transition: ease-in 0.2s;
+      border-radius: 5%;
+
     }
 
     .nav-link:hover {
-      transition:ease-in-out 1s;
-      transform: translatey(10px);
-      a {color: $secondary;}
+      transition: ease-out 0.2s;
+      transform: translatey(-2px);
+      color: $secondary !important;
+      background-color: $light;
+      box-shadow: -4px 4px 0px $primary;
     }
 
     .dropdown-menu {
@@ -99,4 +107,3 @@ footer {
   border: 1px solid $secondary;
   transform: translateY(4px);
 }
-
