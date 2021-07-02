@@ -48,13 +48,45 @@ class ClientController extends AbstractController
      */
     public function invoice(CarparkRepository $carparkRepository): Response
     {
-        $user = $this->security->getUser();
+
+        // récupération les objets
+        $user = $this->getUser();
+        $client= $user->getClient();
+
+        // liste des stationnements de l'user
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
+        
+        $tab_carpark = [];
+        $tab_invoice = [];
+
+        // liste des factures de l'user
+        foreach($carparks as $carpark)
+        {
+            if($carpark->getInvoice() != null)
+            {
+                array_push($tab_carpark, $carpark); 
+            }
+
+        }
+
+        for($i = 0; $i<= count($tab_carpark)-1; $i++)
+        {
+            $invoice=$tab_carpark[$i]->getInvoice();
+            if($i==0)
+            {
+                array_push($tab_invoice, $invoice);
+            }
+            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i-1]->getInvoice()) {
+                array_push($tab_invoice, $invoice);
+            }
+
+        }
         $invoices = $carparkRepository->findBy(['invoice' => $user->getUserIdentifier()]);
 
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
-            'invoices' => $invoices,
+            'invoices' => $tab_invoice,
         ]);
     }
 
@@ -116,22 +148,23 @@ class ClientController extends AbstractController
             $invoice->setAmount($price);
         }
 
-
+        // on finalise l'objet invoice (facture) créé en BD
         $invoice->addCarpark($carpark);
         $em->persist($invoice);
         $em->flush();
 
-        // on finalise l'objet carpark (stationnement) créé
+        // on finalise l'objet carpark (stationnement) créé en BD
         $carpark->setInvoice($invoice);
         $em->persist($carpark);
         $em->flush();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'ASC']);
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
         
         $tab_carpark = [];
         $tab_invoice = [];
 
+        // liste des factures de l'user
         foreach($carparks as $carpark)
         {
             if($carpark->getInvoice() != null)
@@ -153,14 +186,7 @@ class ClientController extends AbstractController
             }
 
         }
-        // echo '<pre>';
-        // var_dump($tab_invoice);
-        // echo '</pre>';
-        // die;
-
-        // $invoices = $invoiceRepository->findBy(['carparks' => $tab_carpark[0]]);
         
-       
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
