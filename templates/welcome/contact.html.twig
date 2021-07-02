@@ -25,27 +25,52 @@
 			<div class="card-body p-4">
 				{{ form_start(form_contact) }}
 
-				<div class="row">
-					<div class="col">
-						{{ form_row(form_contact.name) }}
+				{% if app.user %}
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.name, { 'value': app.user.client.name }) }}
+						</div>
+						<div class="col">
+							{{ form_row(form_contact.surname, { 'value': app.user.client.surname }) }}
+						</div>
 					</div>
-					<div class="col">
-						{{ form_row(form_contact.surname) }}
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.email, { 'value': app.user.client.email }) }}
+						</div>
+						<div class="col">
+							{{ form_row(form_contact.phone, { 'value': app.user.client.phone }) }}
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						{{ form_row(form_contact.email) }}
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.message) }}
+						</div>
 					</div>
-					<div class="col">
-						{{ form_row(form_contact.phone) }}
+				{% else %}
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.name) }}
+						</div>
+						<div class="col">
+							{{ form_row(form_contact.surname) }}
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						{{ form_row(form_contact.message) }}
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.email) }}
+						</div>
+						<div class="col">
+							{{ form_row(form_contact.phone) }}
+						</div>
 					</div>
-				</div>
+					<div class="row">
+						<div class="col">
+							{{ form_row(form_contact.message) }}
+						</div>
+					</div>
+				{% endif %}
+
 				<div class="row mt-4 text-nowrap">
 
 					<div class="col d-flex justify-content-end">
