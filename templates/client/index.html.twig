@@ -9,7 +9,8 @@
 			class="row">
 
 			{# Col infos client #}
-			<div class="col-lg-4 col-sm-12 mb-4">
+			<div
+				class="col-lg-4 col-sm-12 mb-4">
 
 				{# Card Espace client #}
 				<div class="card shadow-lg">
@@ -72,18 +73,20 @@
 										<tr>
 											<th scope="col">Parking</th>
 											<th scope="col">Date d'arrivée</th>
-											<th scope="col">Prix actuel</th>
+											{# <th scope="col">Prix actuel</th> #}
 										</tr>
 									</thead>
 									<tbody>
 
-										{# {% for carpark in carparks %} #}
-										<tr>
-											<th scope="row">Oddyseum</th>
-											<td>18/06/2021, 18h34</td>
-											<td>24,32€</td>
-										</tr>
-										{# {% endfor %} #}
+										{% if carpark %}
+											<tr>
+												<th scope="row">
+													{{ carpark.parking }}
+												</th>
+												<td>{{ carpark.arrival|format_datetime('long', 'short', locale='fr') }}</td>
+												{# <td>{{ carpark.price|number_format(2) }} €</td> #}
+											</tr>
+										{% endif %}
 
 									</tbody>
 								</table>
@@ -99,14 +102,24 @@
 
 					<div class="card-header p-4">
 						<h2 class="h4 card-title font-weight-bold text-primary">
-							Factures
+							Facture du mois en cours
 						</h2>
 					</div>
 					<div
 						class="card-body">
 						{# {% for carpark in carparks %} #}
 						<div class="container">
-							<p>Total du mois en cours : 24,06€</p>
+							<p>Stationnements :
+								{{ invoices.amount|number_format(2) }}
+								€
+								<br>
+								Abonnement :
+								{{ subscription_price|number_format(2) }}
+								€</p>
+							<hr class="m-1">
+							<p>Total dû (TTC) :
+								{{invoices.amount|number_format(2) + subscription_price|number_format(2) }}
+								€</p>
 							<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
 						</div>
 						{# {% endfor %} #}

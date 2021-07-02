@@ -34,14 +34,50 @@ class ClientController extends AbstractController
     /**
      * @Route("/user", name="user")
      */
-    public function index(): Response
+    public function index(CarparkRepository $carparkRepository,SubscriptionPriceRepository $subscriptionPriceRepository): Response
     {
-        $user = $this->security->getUser();
+        $user = $this->getUser();
+        $client = $user->getClient();
+        $carpark_active = $carparkRepository->findOneBy(['client' => $client, 'departure'=>null]);
+
+        // liste des stationnements de l'user
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
+        
+        $tab_carpark = [];
+        $tab_invoice = [];
+
+        // liste des factures de l'user
+        foreach($carparks as $carpark)
+        {
+            if($carpark->getInvoice() != null)
+            {
+                array_push($tab_carpark, $carpark); 
+            }
+
+        }
+
+        for($i = 0; $i<= count($tab_carpark)-1; $i++)
+        {
+            $invoice=$tab_carpark[$i]->getInvoice();
+            if($i==0)
+            {
+                array_push($tab_invoice, $invoice);
+            }
+            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i-1]->getInvoice()) {
+                array_push($tab_invoice, $invoice);
+            }
+        }
+
+        $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
+        $subscription_price = $subscription->getAmountSub();
 
         return $this->render('client/index.html.twig', [
             'controller_name' => 'ClientController - Espace Client',
 
             'user' => $user,
+            'carpark' => $carpark_active,
+            'invoices' => $tab_invoice[0],
+            'subscription_price' => $subscription_price,
         ]);
     }
 
