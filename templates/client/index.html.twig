@@ -107,7 +107,7 @@
 					</div>
 					<div
 						class="card-body">
-						{# {% for carpark in carparks %} #}
+						{% if invoices %}
 						<div class="container">
 							<p>Stationnements :
 								{{ invoices.amount|number_format(2) }}
@@ -122,7 +122,19 @@
 								€</p>
 							<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
 						</div>
-						{# {% endfor %} #}
+						{% else %}
+							<div class="container">
+							<p>Stationnements :
+								0 €
+								<br>
+								Abonnement :
+								0 €</p>
+							<hr class="m-1">
+							<p>Total dû (TTC) :
+								0 €</p>
+							<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
+						</div>
+						{% endif %}
 					</div>
 
 				</div>
