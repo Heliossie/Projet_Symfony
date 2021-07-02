@@ -34,36 +34,31 @@ class ClientController extends AbstractController
     /**
      * @Route("/user", name="user")
      */
-    public function index(CarparkRepository $carparkRepository,SubscriptionPriceRepository $subscriptionPriceRepository): Response
+    public function index(CarparkRepository $carparkRepository, SubscriptionPriceRepository $subscriptionPriceRepository): Response
     {
         $user = $this->getUser();
         $client = $user->getClient();
-        $carpark_active = $carparkRepository->findOneBy(['client' => $client, 'departure'=>null]);
+        $carpark_active = $carparkRepository->findOneBy(['client' => $client, 'departure' => null]);
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
-        
+        $carparks = $carparkRepository->findBy(['client' => $client], ['invoice' => 'DESC']);
+
         $tab_carpark = [];
         $tab_invoice = [];
 
         // liste des factures de l'user
-        foreach($carparks as $carpark)
-        {
-            if($carpark->getInvoice() != null)
-            {
-                array_push($tab_carpark, $carpark); 
+        foreach ($carparks as $carpark) {
+            if ($carpark->getInvoice() != null) {
+                array_push($tab_carpark, $carpark);
             }
-
         }
 
-        for($i = 0; $i<= count($tab_carpark)-1; $i++)
-        {
-            $invoice=$tab_carpark[$i]->getInvoice();
-            if($i==0)
-            {
+        for ($i = 0; $i <= count($tab_carpark) - 1; $i++) {
+            $invoice = $tab_carpark[$i]->getInvoice();
+            if ($i == 0) {
                 array_push($tab_invoice, $invoice);
             }
-            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i-1]->getInvoice()) {
+            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i - 1]->getInvoice()) {
                 array_push($tab_invoice, $invoice);
             }
         }
@@ -89,35 +84,29 @@ class ClientController extends AbstractController
 
         // récupération les objets
         $user = $this->getUser();
-        $client= $user->getClient();
+        $client = $user->getClient();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
-        
+        $carparks = $carparkRepository->findBy(['client' => $client], ['invoice' => 'DESC']);
+
         $tab_carpark = [];
         $tab_invoice = [];
 
         // liste des factures de l'user
-        foreach($carparks as $carpark)
-        {
-            if($carpark->getInvoice() != null)
-            {
-                array_push($tab_carpark, $carpark); 
+        foreach ($carparks as $carpark) {
+            if ($carpark->getInvoice() != null) {
+                array_push($tab_carpark, $carpark);
             }
-
         }
 
-        for($i = 0; $i<= count($tab_carpark)-1; $i++)
-        {
-            $invoice=$tab_carpark[$i]->getInvoice();
-            if($i==0)
-            {
+        for ($i = 0; $i <= count($tab_carpark) - 1; $i++) {
+            $invoice = $tab_carpark[$i]->getInvoice();
+            if ($i == 0) {
                 array_push($tab_invoice, $invoice);
             }
-            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i-1]->getInvoice()) {
+            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i - 1]->getInvoice()) {
                 array_push($tab_invoice, $invoice);
             }
-
         }
         $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
         $subscription_price = $subscription->getAmountSub();
@@ -133,42 +122,47 @@ class ClientController extends AbstractController
     /**
      * @Route("/user/invoice/{id}", name="user_invoice_current")
      */
-    public function currentInvoice($id,CarparkRepository $carparkRepository, PricelistRepository $pricelistRepository, SubscriptionPriceRepository $subscriptionPriceRepository, EntityManagerInterface $em): Response
+    public function currentInvoice($id, CarparkRepository $carparkRepository, PricelistRepository $pricelistRepository, SubscriptionPriceRepository $subscriptionPriceRepository, EntityManagerInterface $em): Response
     {
+        if (!$carparkRepository->findOneBy(['id' => $id, 'departure' => null])) {
+            return $this->redirectToRoute('user_invoice');
+        }
+        
         // récupération des objets
         $user = $this->getUser();
-        $client= $user->getClient();
+        $client = $user->getClient();
         $carpark = $carparkRepository->findOneBy(['id' => $id]);
 
         // calcul de la durée de stationnement
         $arrival_date = $carpark->getArrival();
         $departure_date = new \DateTime();
         $carpark->setDeparture($departure_date);
+
+        // $carpark_exist = $carparkRepository->findOneBy(['id' => $id]);
         $duration = $arrival_date->diff($departure_date);
         $duration = $duration->format('%H:%I:%S');
 
-        
-       
-        
+
+
+
         // récupération du prix en fonction de la durée
-        $query=$pricelistRepository->findByPrice($duration);
+        $query = $pricelistRepository->findByPrice($duration);
 
-        
 
-        $price=$query[0]->getPrice();
+
+        $price = $query[0]->getPrice();
         $carpark->setPrice($price);
 
-        
+
 
         // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
         // On détermine si le client a déjà stationné dans le mois en cours
         $current_month = $departure_date->format('n');
         $current_year = $departure_date->format('Y');
-        $current_carparks= $carparkRepository->monthlyCarparks($current_month, $current_year, $client);
-        
+        $current_carparks = $carparkRepository->monthlyCarparks($current_month, $current_year, $client);
+
         // si déjà des stationnements dans le mois
-        if ($current_carparks) 
-        {
+        if ($current_carparks) {
             // on récupére un des enregistrements pour avoir l'id et la date de facture
             $invoice = $current_carparks[0]->getInvoice();
             // on incrémente son montant
@@ -177,12 +171,11 @@ class ClientController extends AbstractController
             $invoice->setAmount($montant);
         }
         // si c'est le 1er stationnement du mois
-        else
-        {
+        else {
             $invoice = new Invoice();
             $year = $departure_date->format('Y');
             $month = $departure_date->format('n');
-            $date_invoice = date('Y-m-d',mktime(0,0,0,$month+1,1,$year));
+            $date_invoice = date('Y-m-d', mktime(0, 0, 0, $month + 1, 1, $year));
             $date_invoice = new \DateTime($date_invoice);
             $invoice->setDate($date_invoice);
             $invoice->setAmount($price);
@@ -199,41 +192,37 @@ class ClientController extends AbstractController
         $em->flush();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
-        
+        $carparks = $carparkRepository->findBy(['client' => $client], ['invoice' => 'DESC']);
+
         $tab_carpark = [];
         $tab_invoice = [];
 
         // liste des factures de l'user
-        foreach($carparks as $carpark)
-        {
-            if($carpark->getInvoice() != null)
-            {
-                array_push($tab_carpark, $carpark); 
+        foreach ($carparks as $carpark) {
+            if ($carpark->getInvoice() != null) {
+                array_push($tab_carpark, $carpark);
             }
-
         }
 
-        for($i = 0; $i<= count($tab_carpark)-1; $i++)
-        {
-            $invoice=$tab_carpark[$i]->getInvoice();
-            if($i==0)
-            {
+        for ($i = 0; $i <= count($tab_carpark) - 1; $i++) {
+            $invoice = $tab_carpark[$i]->getInvoice();
+            if ($i == 0) {
                 array_push($tab_invoice, $invoice);
             }
-            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i-1]->getInvoice()) {
+            if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i - 1]->getInvoice()) {
                 array_push($tab_invoice, $invoice);
             }
-
         }
-        
+
         $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
         $subscription_price = $subscription->getAmountSub();
+
+        $this->addFlash('success', "Votre stationnement à bien était facturé");
 
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
-            'carpark' =>$carpark,
+            'carpark' => $carpark,
             'invoice' => $invoice,
             'invoices' => $tab_invoice,
             'duration' => $duration,
@@ -251,8 +240,8 @@ class ClientController extends AbstractController
         $user = $this->getUser();
         $client = $user->getClient();
         // on vérifie que pour l'user connecté, s'il a déjà un stationnement en cours
-        $carparks = $carparkRepository->findOneBy(['client' => $client, 'departure'=>null]);
-    
+        $carparks = $carparkRepository->findOneBy(['client' => $client, 'departure' => null]);
+
 
         return $this->render('parking/carpark.html.twig', [
             'controller_name' => 'ParkingController - carpark',
@@ -261,7 +250,7 @@ class ClientController extends AbstractController
             'parkings' => $parkingRepository->findAll(),
         ]);
     }
-    
+
 
     /**
      * @Route("/user/carpark/{id}",name="user_carpark")
@@ -281,7 +270,7 @@ class ClientController extends AbstractController
         $em->persist($carpark);
         $em->flush();
 
-        
+
         return $this->render('parking/carpark.html.twig', [
             'controller_name' => 'ParkingController - carpark',
             'user' => $user,
@@ -326,5 +315,4 @@ class ClientController extends AbstractController
             'form_user' => $form_user->createView(),
         ]);
     }
-
 }
