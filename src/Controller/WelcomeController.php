@@ -6,12 +6,12 @@ use App\Entity\Admin;
 use App\Entity\Client;
 use App\Form\ClientFormType;
 use App\Form\ContactFormType;
-// use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Email;
 use App\Repository\AdminRepository;
 use App\Repository\PricelistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-// use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +32,7 @@ class WelcomeController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(Request $request): Response
+    public function contact(Request $request, MailerInterface $mailer): Response
     {   
         $form_contact = $this->createForm(ContactFormType::class);
 
@@ -41,25 +41,25 @@ class WelcomeController extends AbstractController
         if ($form_contact->isSubmitted() && $form_contact->isValid()) {
 
             $contactFormData = $form_contact->getData();
-            $this->addFlash('success', "Merci, votre message a été envoyé.");
+            
 
-            return $this->redirectToRoute('contact');
+            
 
             // Pour rajouter l'envoi de mails
-            /*
+            
             $message = (new Email())
             ->from($contactFormData['email'])
-            ->to('parkit@mailinator.com')
-            ->subject('You\'ve got mail!')
+            ->to('981327c222-1298e1@inbox.mailtrap.io')
+            ->subject('Park-it - message de ' . $contactFormData['name'] . ' ' . $contactFormData['surname'] . '')
             ->text(
                 $contactFormData['message']
             );
 
             $mailer->send($message);
-
-            return $this->render('welcome/contact.html.twig');
-            */
             
+            $this->addFlash('success', "Merci, votre message a bien été envoyé.");
+            
+            return $this->redirectToRoute('contact');
         }
         return $this->render('welcome/contact.html.twig', [
             'controller_name' => 'WelcomeController - Contact',
