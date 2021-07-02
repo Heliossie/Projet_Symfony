@@ -56,7 +56,7 @@ class ClientController extends AbstractController
         $client= $user->getClient();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'ASC']);
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
         
         $tab_carpark = [];
         $tab_invoice = [];
@@ -163,7 +163,7 @@ class ClientController extends AbstractController
         $em->flush();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'ASC']);
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
         
         $tab_carpark = [];
         $tab_invoice = [];
