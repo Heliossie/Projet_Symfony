@@ -101,11 +101,11 @@
 															{{ invoices[i].amount|number_format(2) }}
 															€</p>
 														<p>Abonnement :
-															{{ subscription_price }}
+															{{ subscription_price|number_format(2) }}
 															€</p>
 														<hr class="m-1">
 														<p>Total dû (TTC) :
-															{{invoices[i].amount|number_format(2) + subscription_price }}
+															{{invoices[i].amount|number_format(2) + subscription_price|number_format(2) }}
 															€</p>
 													</div>
 
