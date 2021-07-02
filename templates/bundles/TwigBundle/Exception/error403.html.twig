@@ -10,9 +10,11 @@ Accès interdit
     <div class="card shadow lg">
         <div class="p-4">
             <h1>Accès interdit</h1>
-            <p>Il semble que vous ête sortie de votre route !</p>
-            <p>Retournez donc sur la bonne <a href="{{ path('welcome') }}">route</a>.</p>
             <p>Code de l'erreur : {{ status_code }} {{ status_text }}</p>
+            <p>Il semble que vous ête sortie de votre route !</p>
+            <div class="col d-flex justify-content-start mb-3">
+                        <a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+                    </div>
         </div>
     </div>
 </div>

@@ -10,9 +10,11 @@ Page non trouvée
     <div class="card shadow lg">
         <div class="p-4">
             <h1>Page non trouvée</h1>
-            <p>Il semblerait que la route que vous cherchez n'existe pas</p>
-            <p>Retrouvez votre chemin par <a href="{{ path('welcome') }}">ici</a>!</p>
             <p>Code de l'erreur : {{ status_code }} {{ status_text }}</p>
+            <p>Il semblerait que la route que vous cherchez n'existe pas</p>
+                <div class="col d-flex justify-content-start mb-3">
+                    <a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+                </div>
         </div>
     </div>
 </div>
