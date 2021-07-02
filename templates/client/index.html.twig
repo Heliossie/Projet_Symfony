@@ -30,6 +30,11 @@
 							{{ user.username }}
 							!</h2>
 
+						{% for success in app.flashes('success') %}
+							<div class="alert alert-success text-center" role="alert">
+								{{ success }}
+							</div>
+						{% endfor %}
 
 						<ul class="list-group list-group-flush text-center">
 							<li class="list-group-item">Nom :
@@ -105,35 +110,34 @@
 							Facture du mois en cours
 						</h2>
 					</div>
-					<div
-						class="card-body">
+					<div class="card-body">
 						{% if invoices %}
-						<div class="container">
-							<p>Stationnements :
-								{{ invoices.amount|number_format(2) }}
-								€
-								<br>
-								Abonnement :
-								{{ subscription_price|number_format(2) }}
-								€</p>
-							<hr class="m-1">
-							<p>Total dû (TTC) :
-								{{invoices.amount|number_format(2) + subscription_price|number_format(2) }}
-								€</p>
-							<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
-						</div>
+							<div class="container">
+								<p>Stationnements :
+									{{ invoices.amount|number_format(2) }}
+									€
+									<br>
+									Abonnement :
+									{{ subscription_price|number_format(2) }}
+									€</p>
+								<hr class="m-1">
+								<p>Total dû (TTC) :
+									{{invoices.amount|number_format(2) + subscription_price|number_format(2) }}
+									€</p>
+								<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
+							</div>
 						{% else %}
 							<div class="container">
-							<p>Stationnements :
-								0 €
-								<br>
-								Abonnement :
-								0 €</p>
-							<hr class="m-1">
-							<p>Total dû (TTC) :
-								0 €</p>
-							<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
-						</div>
+								<p>Stationnements :
+																	0 €
+									<br>
+									Abonnement :
+																	0 €</p>
+								<hr class="m-1">
+								<p>Total dû (TTC) :
+																	0 €</p>
+								<a href="{{ path('user_invoice') }}" class="btn btn-outline-primary">Voir mes factures</a>
+							</div>
 						{% endif %}
 					</div>
 

@@ -127,7 +127,7 @@ class ClientController extends AbstractController
         if (!$carparkRepository->findOneBy(['id' => $id, 'departure' => null])) {
             return $this->redirectToRoute('user_invoice');
         }
-        
+
         // récupération des objets
         $user = $this->getUser();
         $client = $user->getClient();
@@ -297,6 +297,7 @@ class ClientController extends AbstractController
             $client = $user->getClient();
             $em->persist($client);
             $em->flush();
+            $this->addFlash('success', "Votre compte à bien était modifié");
             return $this->redirectToRoute('user');
         }
 
@@ -306,6 +307,7 @@ class ClientController extends AbstractController
             $user->setPassword($passwordHasher->hashPassword($user, $pwd));
             $em->persist($user);
             $em->flush();
+            $this->addFlash('success', "Votre mot de passe à bien était modifié");
             return $this->redirectToRoute('user');
         }
 
