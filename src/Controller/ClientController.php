@@ -4,23 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Carpark;
 use App\Entity\Invoice;
-use App\Entity\SubscriptionPrice;
 use App\Form\UserEditFormType;
 use App\Form\ClientEditFormType;
 use App\Repository\CarparkRepository;
-use App\Repository\InvoiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ParkingRepository;
 use App\Repository\PricelistRepository;
 use App\Repository\SubscriptionPriceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints\NotNull;
 
 class ClientController extends AbstractController
 {
@@ -107,6 +103,7 @@ class ClientController extends AbstractController
 
         }
 
+        // on évite la redondance de factures
         for($i = 0; $i<= count($tab_carpark)-1; $i++)
         {
             $invoice=$tab_carpark[$i]->getInvoice();
@@ -119,6 +116,8 @@ class ClientController extends AbstractController
             }
 
         }
+
+        // on récupére le montant de l'abonnement mensuel en vigueur
         $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
         $subscription_price = $subscription->getAmountSub();
 
@@ -139,26 +138,19 @@ class ClientController extends AbstractController
         $user = $this->getUser();
         $client= $user->getClient();
         $carpark = $carparkRepository->findOneBy(['id' => $id]);
-
+        
         // calcul de la durée de stationnement
         $arrival_date = $carpark->getArrival();
         $departure_date = new \DateTime();
         $carpark->setDeparture($departure_date);
         $duration = $arrival_date->diff($departure_date);
         $duration = $duration->format('%H:%I:%S');
-
-        
-       
         
         // récupération du prix en fonction de la durée
         $query=$pricelistRepository->findByPrice($duration);
 
-        
-
         $price=$query[0]->getPrice();
         $carpark->setPrice($price);
-
-        
 
         // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
         // On détermine si le client a déjà stationné dans le mois en cours
@@ -214,6 +206,7 @@ class ClientController extends AbstractController
 
         }
 
+        // on évite la redondance de factures
         for($i = 0; $i<= count($tab_carpark)-1; $i++)
         {
             $invoice=$tab_carpark[$i]->getInvoice();
@@ -224,9 +217,9 @@ class ClientController extends AbstractController
             if ($i > 0 && $tab_carpark[$i]->getInvoice() != $tab_carpark[$i-1]->getInvoice()) {
                 array_push($tab_invoice, $invoice);
             }
-
         }
         
+        // on récupére le montant de l'abonnement mensuel en vigueur
         $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
         $subscription_price = $subscription->getAmountSub();
 
