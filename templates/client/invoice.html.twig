@@ -56,10 +56,11 @@
 
 									<div class="accordion-body">
 										<div class="container p-2">
-
-											{% for carpark in invoices[i].carparks %}
-
-												<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+											{% for success in app.flashes('success') %}
+												<div class="alert alert-success" role="alert">
+													{{ success }}
+													:
+													<hr>
 													<div class="row text-center align-items-center">
 														<div class="col">
 															<p class="text-muted">Date de sortie :
@@ -67,9 +68,37 @@
 															<p>{{ carpark.departure|format_datetime('short', 'none', locale='fr') }}</p>
 														</div>
 														<div class="col">
+															<p class="text-muted">Durée de stationnement :
+															</p>
+															<p>{{ duration }}</p>
+														</div>
+														<div class="col">
+															<p class="text-muted">Parking :
+															</p>
+															<p>{{ carpark.parking.name }}</p>
+														</div>
+														<div class="col">
+															<p class="text-muted">Prix :
+															</p>
+															<p>{{ carpark.price|number_format(2) }}
+																€</p>
+														</div>
+													</div>
+												</div>
+											{% endfor %}
+											{% for carpark in invoices[i].carparks %}
+
+												<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+													<div class="row text-center align-items-center">
+														<div class="col">
+															<p class="text-muted">Date de sortie :
+															</p>
+															<p>{{ carpark.departure|format_datetime('short', 'short', locale='fr') }}</p>
+														</div>
+														<div class="col">
 															<p class="text-muted">Date d'entrée :
 															</p>
-															<p>{{ carpark.arrival|format_datetime('short', 'none', locale='fr') }}</p>
+															<p>{{ carpark.arrival|format_datetime('short', 'short', locale='fr') }}</p>
 														</div>
 														<div class="col">
 															<p class="text-muted">Parking :
