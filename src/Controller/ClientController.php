@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Carpark;
 use App\Entity\Invoice;
+use App\Entity\SubscriptionPrice;
 use App\Form\UserEditFormType;
 use App\Form\ClientEditFormType;
 use App\Repository\CarparkRepository;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ParkingRepository;
 use App\Repository\PricelistRepository;
+use App\Repository\SubscriptionPriceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -46,7 +48,7 @@ class ClientController extends AbstractController
     /**
      * @Route("/user/invoice", name="user_invoice")
      */
-    public function invoice(CarparkRepository $carparkRepository): Response
+    public function invoice(CarparkRepository $carparkRepository, SubscriptionPriceRepository $subscriptionPriceRepository): Response
     {
 
         // récupération les objets
@@ -54,7 +56,7 @@ class ClientController extends AbstractController
         $client= $user->getClient();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'ASC']);
         
         $tab_carpark = [];
         $tab_invoice = [];
@@ -81,19 +83,21 @@ class ClientController extends AbstractController
             }
 
         }
-        $invoices = $carparkRepository->findBy(['invoice' => $user->getUserIdentifier()]);
+        $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
+        $subscription_price = $subscription->getAmountSub();
 
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
             'invoices' => $tab_invoice,
+            'subscription_price' => $subscription_price,
         ]);
     }
 
     /**
      * @Route("/user/invoice/{id}", name="user_invoice_current")
      */
-    public function currentInvoice($id,CarparkRepository $carparkRepository, PricelistRepository $pricelistRepository, InvoiceRepository $invoiceRepository, EntityManagerInterface $em): Response
+    public function currentInvoice($id,CarparkRepository $carparkRepository, PricelistRepository $pricelistRepository, SubscriptionPriceRepository $subscriptionPriceRepository, EntityManagerInterface $em): Response
     {
         // récupération des objets
         $user = $this->getUser();
@@ -159,7 +163,7 @@ class ClientController extends AbstractController
         $em->flush();
 
         // liste des stationnements de l'user
-        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'DESC']);
+        $carparks = $carparkRepository->findBy(['client' => $client],['invoice' => 'ASC']);
         
         $tab_carpark = [];
         $tab_invoice = [];
@@ -187,6 +191,9 @@ class ClientController extends AbstractController
 
         }
         
+        $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
+        $subscription_price = $subscription->getAmountSub();
+
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
             'user' => $user,
@@ -195,6 +202,7 @@ class ClientController extends AbstractController
             'invoices' => $tab_invoice,
             'duration' => $duration,
             'price' => $price,
+            'subscription_price' => $subscription_price,
         ]);
     }
 

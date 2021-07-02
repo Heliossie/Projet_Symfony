@@ -36,15 +36,13 @@ class SubscriptionPriceRepository extends ServiceEntityRepository
     }
     */
 
-    /*
     public function findOneBySomeField($value): ?SubscriptionPrice
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+            ->andWhere('s.date <= :val')
             ->setParameter('val', $value)
+            ->orderBy('s.date', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }
