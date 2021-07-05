@@ -15,139 +15,142 @@
 			</div>
 			<div class="card-body p-4">
 
-				<div
-					class="accordion" id="invoiceAccordion">
+				<div class="accordion" id="invoiceAccordion">
 
-					{# {% for(i = 0; i<= count(invoices)-1; i++)%} #}
+					{% if invoices %}
+						{% for i in 0..invoices|length -1 %}
 
-					{% for i in 0..invoices|length -1 %}
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="headingOne">
 
-						<div class="accordion-item">
-							<h2 class="accordion-header" id="headingOne">
+									{% if invoices and i == 0 %}
+										<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ invoices[i].id }}" aria-expanded="true" aria-controls="collapseOne">
+
+											Facture du
+											{{ invoices[i].date|format_datetime('long', 'none', locale='fr') }}
+											&nbsp;
+
+											<p class="text-muted">
+												(mois en cours)</p>
+										</button>
+									{% else %}
+
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ invoices[i].id }}" aria-expanded="false" aria-controls="collapseTwo">
+											Facture du
+											{{ invoices[i].date|format_datetime('long', 'none', locale='fr') }}
+											&nbsp;
+
+											<p class="text-muted">
+												(mois précédent)</p>
+										</button>
+									{% endif %}
+								</h2>
 
 								{% if i == 0 %}
-									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ invoices[i].id }}" aria-expanded="true" aria-controls="collapseOne">
+									<div id="collapse_{{ invoices[i].id }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#invoiceAccordion">
+									{% else %}
+										<div id="collapse_{{ invoices[i].id }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#invoiceAccordion">
+										{% endif %}
 
-										Facture du
-										{{ invoices[i].date|format_datetime('long', 'none', locale='fr') }}
-										&nbsp;
-
-										<p class="text-muted">
-											(mois en cours)</p>
-									</button>
-								{% else %}
-
-									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ invoices[i].id }}" aria-expanded="false" aria-controls="collapseTwo">
-										Facture du
-										{{ invoices[i].date|format_datetime('long', 'none', locale='fr') }}
-										&nbsp;
-
-										<p class="text-muted">
-											(mois précédent)</p>
-									</button>
-								{% endif %}
-							</h2>
-
-							{% if i == 0 %}
-								<div id="collapse_{{ invoices[i].id }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#invoiceAccordion">
-								{% else %}
-									<div id="collapse_{{ invoices[i].id }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#invoiceAccordion">
-									{% endif %}
-
-									<div class="accordion-body">
-										<div class="container p-2">
-											{% for success in app.flashes('success') %}
-												<div class="alert alert-success" role="alert">
-													{{ success }}
-													:
-													<hr>
-													<div class="row text-center align-items-center">
-														<div class="col">
-															<p class="text-muted">Date de sortie :
-															</p>
-															<p>{{ carpark.departure|format_datetime('short', 'none', locale='fr') }}</p>
-														</div>
-														<div class="col">
-															<p class="text-muted">Durée de stationnement :
-															</p>
-															<p>{{ duration }}</p>
-														</div>
-														<div class="col">
-															<p class="text-muted">Parking :
-															</p>
-															<p>{{ carpark.parking.name }}</p>
-														</div>
-														<div class="col">
-															<p class="text-muted">Prix :
-															</p>
-															<p>{{ carpark.price|number_format(2) }}
-																€</p>
+										<div class="accordion-body">
+											<div class="container p-2">
+												{% for success in app.flashes('success') %}
+													<div class="alert alert-success" role="alert">
+														{{ success }}
+														:
+														<hr>
+														<div class="row text-center align-items-center">
+															<div class="col">
+																<p class="text-muted">Date de sortie :
+																</p>
+																<p>{{ carpark.departure|format_datetime('short', 'none', locale='fr') }}</p>
+															</div>
+															<div class="col">
+																<p class="text-muted">Durée de stationnement :
+																</p>
+																<p>{{ duration }}</p>
+															</div>
+															<div class="col">
+																<p class="text-muted">Parking :
+																</p>
+																<p>{{ carpark.parking.name }}</p>
+															</div>
+															<div class="col">
+																<p class="text-muted">Prix :
+																</p>
+																<p>{{ carpark.price|number_format(2) }}
+																	€</p>
+															</div>
 														</div>
 													</div>
-												</div>
-											{% endfor %}
-											{% for carpark in invoices[i].carparks %}
+												{% endfor %}
+												{% for carpark in invoices[i].carparks %}
+
+													<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
+														<div class="row text-center align-items-center">
+															<div class="col">
+																<p class="text-muted">Date de sortie :
+																</p>
+																<p>{{ carpark.departure|format_datetime('short', 'short', locale='fr') }}</p>
+															</div>
+															<div class="col">
+																<p class="text-muted">Date d'entrée :
+																</p>
+																<p>{{ carpark.arrival|format_datetime('short', 'short', locale='fr') }}</p>
+															</div>
+															<div class="col">
+																<p class="text-muted">Parking :
+																</p>
+																<p>{{ carpark.parking.name }}</p>
+															</div>
+															<div class="col">
+																<p class="text-muted">Prix :
+																</p>
+																<p>{{ carpark.price|number_format(2) }}
+																	€</p>
+															</div>
+														</div>
+													</div>
+												{% endfor %}
 
 												<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
 													<div class="row text-center align-items-center">
-														<div class="col">
-															<p class="text-muted">Date de sortie :
+														<div class="col-6">
+															<p class="text-muted">N° facture :
 															</p>
-															<p>{{ carpark.departure|format_datetime('short', 'short', locale='fr') }}</p>
+															<p>{{ invoices[i].id }}_{{ invoices[i].date|format_datetime('short', 'none', locale='fr') }}_{{ user.client.id }}</p>
+															<a href="" class="btn btn-outline-primary m-2">Télecharger la facture</a>
 														</div>
-														<div class="col">
-															<p class="text-muted">Date d'entrée :
+														<div class="col-5 text-end">
+															<p class="text-muted">Montant total à payer :
 															</p>
-															<p>{{ carpark.arrival|format_datetime('short', 'short', locale='fr') }}</p>
-														</div>
-														<div class="col">
-															<p class="text-muted">Parking :
-															</p>
-															<p>{{ carpark.parking.name }}</p>
-														</div>
-														<div class="col">
-															<p class="text-muted">Prix :
-															</p>
-															<p>{{ carpark.price|number_format(2) }}
+															<p>Stationnements :
+																{{ invoices[i].amount|number_format(2) }}
+																€</p>
+															<p>Abonnement :
+																{{ subscription_price|number_format(2) }}
+																€</p>
+															<hr class="m-1">
+															<p>Total dû (TTC) :
+																{{invoices[i].amount|number_format(2) + subscription_price|number_format(2) }}
 																€</p>
 														</div>
+
 													</div>
 												</div>
-											{% endfor %}
 
-											<div class="card p-2 shadow-sm d-flex justify-content-center align-items-between">
-												<div class="row text-center align-items-center">
-													<div class="col-6">
-														<p class="text-muted">N° facture :
-														</p>
-														<p>{{ invoices[i].id }}_{{ invoices[i].date|format_datetime('short', 'none', locale='fr') }}_{{ user.client.id }}</p>
-														<a href="" class="btn btn-outline-primary m-2">Télecharger la facture</a>
-													</div>
-													<div class="col-5 text-end">
-														<p class="text-muted">Montant total à payer :
-														</p>
-														<p>Stationnements :
-															{{ invoices[i].amount|number_format(2) }}
-															€</p>
-														<p>Abonnement :
-															{{ subscription_price|number_format(2) }}
-															€</p>
-														<hr class="m-1">
-														<p>Total dû (TTC) :
-															{{invoices[i].amount|number_format(2) + subscription_price|number_format(2) }}
-															€</p>
-													</div>
-
-												</div>
 											</div>
-
 										</div>
 									</div>
+
 								</div>
-
+							{% endfor %}
+						{% else %}
+							<div class="card p-4 shadow-sm">
+								<h2 class="h5">Vous n'avez aucune facture en cours, effectuer un stationnement pour commencer !</h2>
+								<a href="{{ path("user_parking") }}" class="btn btn-primary my-2">Se stationner</a>
 							</div>
-						{% endfor %}
-
+						{% endif %}
 					</div>
 
 				</div>

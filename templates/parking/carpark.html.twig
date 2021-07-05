@@ -10,7 +10,7 @@
 
 			<div class="card-header p-4">
 				<h1 class="h3 card-title font-weight-bold text-primary">
-					Simulation de stationnement :
+					Simulation de stationnement
 				</h1>
 
 			</div>
@@ -36,7 +36,7 @@
 									{{ carparks.arrival|format_datetime('medium', 'short') }}</p>
 							</div>
 							<div class="col-3">
-								<a class="btn btn-lg btn-primary" href="{{ path('user_invoice_current', { id: carparks.id }) }}">Sortir</a>
+								<a class="btn btn-lg btn-primary text-light" href="{{ path('user_invoice_current', { id: carparks.id }) }}">Sortir du parking</a>
 							</div>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 										{{ parking.NbPlaces }}</p>
 								</div>
 								<div class="col-3">
-									<a class="btn btn-lg btn-primary" href="{{ path('user_carpark', { id: parking.id }) }}">Stationner</a>
+									<a class="btn btn-lg btn-primary text-light" href="{{ path('user_carpark', { id: parking.id }) }}">Stationner</a>
 								</div>
 							</div>
 						</div>

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Page non trouvée
+{% endblock %}
+
+{% block body %}
+
+<div class="container p-4">
+    <div class="card shadow lg">
+        <div class="p-4">
+            <h1>Erreur interne au serveur</h1>
+            <p>Code de l'erreur : {{ status_code }} {{ status_text }}</p>
+            <p>Désolé, la page que vous recherchez n'est pas disponible pour le moment.</p>
+                <div class="col d-flex justify-content-start mb-3">
+                    <a href="{{ path('welcome') }}" class="btn btn-outline-primary">Revenir à l'accueil</a>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
