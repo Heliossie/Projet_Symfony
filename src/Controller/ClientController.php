@@ -49,6 +49,7 @@ class ClientController extends AbstractController
             }
         }
 
+        // on évite la redondance de factures
         for ($i = 0; $i <= count($tab_carpark) - 1; $i++) {
             $invoice = $tab_carpark[$i]->getInvoice();
             if ($i == 0) {
@@ -59,15 +60,27 @@ class ClientController extends AbstractController
             }
         }
 
+        // on récupére le montant de l'abonnement mensuel en vigueur
         $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
         $subscription_price = $subscription->getAmountSub();
+
+        // on vérifie s'il existe au moins une facture et si oui, on affiche la plus récente
+        if($tab_invoice==[])
+        {
+            $current_invoice ='';
+            $subscription_price='';
+        }
+        else
+        {
+            $current_invoice=$tab_invoice[0];
+        }
 
         return $this->render('client/index.html.twig', [
             'controller_name' => 'ClientController - Espace Client',
 
             'user' => $user,
             'carpark' => $carpark_active,
-            'invoices' => $tab_invoice[0],
+            'invoices' => $current_invoice,
             'subscription_price' => $subscription_price,
         ]);
     }
@@ -134,19 +147,38 @@ class ClientController extends AbstractController
         $client = $user->getClient();
         $carpark = $carparkRepository->findOneBy(['id' => $id]);
         
-        // calcul de la durée de stationnement
+        // modification de la date et heure de sortie
         $arrival_date = $carpark->getArrival();
         $departure_date = new \DateTime();
         $carpark->setDeparture($departure_date);
 
-        // $carpark_exist = $carparkRepository->findOneBy(['id' => $id]);
+        // clacul de la durée de stationnement
         $duration = $arrival_date->diff($departure_date);
         $duration = $duration->format('%H:%I:%S');
-        
-        // récupération du prix en fonction de la durée
-        $query = $pricelistRepository->findByPrice($duration);
 
+        // récupération du prix en fonction de la durée
+
+        // si la durée dépasse les 12 heures
+        $price_max = 0;
+        if ($duration > '12:00:00') {
+            $duration_format_date = new \DateTime($duration);
+            $duration_max = new \DateTime('12:00:00');
+            $duration_plus= $duration_format_date->diff($duration_max);
+            $duration_plus = $duration_plus->format('%H:%I:%S');
+            $query_price_max = $pricelistRepository->findByPrice('12:00:00');
+            $price_max = $query_price_max[0]->getPrice();
+            $query = $pricelistRepository->findByPrice($duration_plus);
+            $price=$query[0]->getPrice();
+        }
+        // sinon
+        else
+        {
+        $query = $pricelistRepository->findByPrice($duration);
         $price=$query[0]->getPrice();
+        }
+        
+        // mise à jour du prix dans l'objet carpark (le nouveau stattionnement)
+        $price = $price + $price_max;
         $carpark->setPrice($price);
 
         // !! invoice ne sera prise en compte qu'au moment de la date de sortie du parking !!
@@ -215,7 +247,7 @@ class ClientController extends AbstractController
         $subscription = $subscriptionPriceRepository->findOneBySomeField(new \DateTime());
         $subscription_price = $subscription->getAmountSub();
 
-        $this->addFlash('success', "Votre stationnement à bien était facturé");
+        $this->addFlash('success', "Votre stationnement a bien été facturé");
 
         return $this->render('client/invoice.html.twig', [
             'controller_name' => 'ClientController - Factures',
