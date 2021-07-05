@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Admin;
 use App\Entity\Client;
+use App\Entity\SubscriptionPrice;
 use App\Form\ClientFormType;
 use App\Form\ContactFormType;
 use Symfony\Component\Mime\Email;
 use App\Repository\AdminRepository;
 use App\Repository\PricelistRepository;
+use App\Repository\SubscriptionPriceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -129,11 +131,15 @@ class WelcomeController extends AbstractController
     /**
      * @Route("/tarif", name="tarif")
      */
-    public function tarif(PricelistRepository $pricelistRepository): Response
+    public function tarif(PricelistRepository $pricelistRepository, SubscriptionPriceRepository $subscriptionPriceRepository): Response
     {
+        $abo = $subscriptionPriceRepository->findAll();
+        $price_abo = $abo[0]->getAmountSub();
+
         return $this->render('welcome/tarif.html.twig', [
             'controller_name' => 'WelcomeController - Tarif',
             'tarifs' => $pricelistRepository->findAll(),
+            'abonnement' => $price_abo,
         ]);
     }
 }
